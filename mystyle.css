@@ -1,0 +1,179 @@
+body {
+  background-color: rgb(138, 236, 243);
+
+}
+
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+.left{
+  float: left;
+}
+
+.right{
+  float: right;
+}
+
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: rgb(157, 231, 236);
+}
+
+.title{
+  color: rgb(209, 13, 7);
+  display:block;
+  text-align: center;
+}
+
+#log {
+  margin: auto;
+  width: 30%;
+border: 3px solid #142850;
+  border-radius: 15px;
+  padding: 10px;
+  background-color: #bae2fd;
+}
+
+#reg {
+  margin: auto;
+  width: 30%;
+  border: 3px solid #142850;
+  border-radius: 15px;
+  padding: 10px;
+  background-color: #bae2fd;
+}
+
+.button {
+  background-color: #2860c9;
+  color: rgb(255, 255, 255);
+  padding: 10px 90px;
+  text-align: center;
+  font-size: 20px;
+  border-radius: 30px;
+
+}
+
+.button:hover{
+  background-color: rgb(144, 25, 255);
+}
+
+.submit-button {
+  background-color: rgb(0, 81, 255);
+  color: rgb(255, 255, 255);
+  padding: 15px 90px;
+  text-align: center;
+  font-size: 15px;
+  
+}
+
+.reset-button {
+  background-color: rgba(241, 59, 46, 0.979);
+  color: rgb(255, 255, 255);
+  padding: 12px 50px;
+  text-align: center;
+  font-size: 15px;
+}
+
+
+
+.loginwithg-button {
+  /* background-color: rgb(122, 137, 172); */
+  background-color: #00a8cc;
+  color: rgb(255, 255, 255);
+  padding: 10px 30px;
+  text-align: center;
+  font-size: 15px;
+  border-radius: 30px;
+}
+
+.loginwithf-button {
+  /* background-color: rgb(122, 137, 172); */
+  background-color: #00a8cc;
+  color: rgb(255, 255, 255);
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 15px;
+  border-radius: 30px;
+}
+
+
+.input-box{
+  border-radius: 18px;
+  padding: 10px 20px
+}
+
+#tle{
+  color: #163a81;
+}
+
+
+.Homemain {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    /* color: white; */
+    margin: 10px;
+  
+}
+
+/* h1 {
+  text-align: center;
+  color: red;
+} */
+
+.Text {
+  color: #000000;
+}
+
+.Head {
+  color: blue;
+  text-align: center;
+
+}
+
+
+.Img {
+  width: 90%;
+  float: right;
+  margin-right: 5%;
+}
+
+.div1 {
+  display: flex;
+  flex-direction: row;
+  text-align: left;
+  margin-left: 10px;
+}
+
+.div2 {
+  
+  float: right;
+  margin-right: 5%;
+}
+
+
+.regist {
+  color: red;
+  text-align: center;
+}
+
+.error {
+  color: red;
+}
