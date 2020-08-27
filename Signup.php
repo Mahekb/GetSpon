@@ -8,38 +8,242 @@
 </style>
 </head>
 <body>
-        <?php
-            $nameErr="";
-        ?>
+
+<?php 
+
+$fnameErr = $mnameErr = $lnameErr = $genderErr = $cityErr = $stateErr = $dobErr = "";
+$addErr = $userErr = $phoneErr = $emailErr = $passErr = $conpassErr = $cpassErr = $checkboxErr = "";
+
+
+if (isset($_POST['firstname']) && $_SERVER["REQUEST_METHOD"] == "POST") {
+    $fname = $_POST["firstname"];
+    $mname = $_POST["firstname"];
+    $lname = $_POST["firstname"];
+    $dob = $_POST["dateofbirth"];
+    $address = $_POST["address"];
+    $city = $_POST["city"];
+    $state = $_POST["state"];
+    $gender = $_POST["gender"];
+    $username = $_POST["username"];
+    $phoneno = $_POST["phoneno"];
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+    $cpassword = $_POST["cpassword"];
+
+    if(isset($_POST['firstname'])) {
+
+        if (empty($_POST["firstname"])) {
+                $fnameErr = "First Name is required";
+        } 
+        
+        else {
+                $fname = $_POST["firstname"];
+        }   
+}   
+     
+if (!preg_match("/^[a-zA-Z]*$/",$fname)) {
+        $fnameErr = "Only letters are allowed.";
+}
+
+if(isset($_POST['middlename'])) {
+
+        if (empty($_POST["middlename"])) {
+                $mnameErr = "Middle Name is required";
+        } 
+        
+        else {
+                $mname = $_POST["firstname"];
+        }   
+} 
+
+if (!preg_match("/^[a-zA-Z]*$/",$mname)) {
+        $mnameErr = "Only letters are allowed.";
+}
+
+if(isset($_POST['lastname'])) {
+
+        if (empty($_POST["lastname"])) {
+                $lnameErr = "Last Name is required";
+        } 
+
+        else {
+                $lname = $_POST["firstname"];
+        }   
+} 
+
+if (!preg_match("/^[a-zA-Z]*$/",$lname)) {
+        $lnameErr = "Only letters are allowed.";
+}
+
+if(isset($_POST['gender'])) {
+
+        if (empty($_POST["gender"])) {
+                $genderErr = "Gender is required";
+        } 
+      else {
+                $gender = $_POST["gender"];
+        }
+}
+
+if(isset($_POST['city'])) {
+
+        if ($_POST['city'] == "--select--") {
+                $cityErr = "City is required";
+        } 
+      else {
+                $city = $_POST["city"];
+        }
+}
+
+if(isset($_POST['state'])) {
+
+        if ($_POST['state'] == "--select--") {
+                $stateErr = "State is required";
+        } 
+      else {
+                $state = $_POST["state"];
+        }
+}
+
+if(isset($_POST['dateofbirth'])) {
+
+        if (empty($_POST["dateofbirth"])) {
+                $dobErr = "DOB is required";
+        } 
+      else {
+                $dob = $_POST["dateofbirth"];
+        }
+}
+
+if(isset($_POST['address'])) {
+
+        if (empty($_POST["address"])) {
+                $addErr = "Address is required";
+        } 
+      else {
+                $address = $_POST["address"];
+        }
+}
+
+if(isset($_POST['gender'])) {
+
+        if (empty($_POST["gender"])) {
+                $genderErr = "Gender is required";
+        } 
+      else {
+                $gender = $_POST["gender"];
+        }
+}
+
+if(isset($_POST['username'])) {
+
+        if (empty($_POST["username"])) {
+                $userErr = "Username is required";
+        } 
+      else {
+                $username = $_POST["username"];
+        }
+}
+
+if(isset($_POST['phoneno'])) {
+
+        if (empty($_POST["phoneno"])) {
+                $phoneErr = "Phone number is required";
+        } 
+      else {
+                $phoneno = $_POST["phoneno"];
+        }
+}
+
+if(isset($_POST['email'])) {
+
+        if (empty($_POST["email"])) {
+                $emailErr = "Email is required";
+        } 
+      else {
+                $email = $_POST["email"];
+        }
+}
+
+if(isset($_POST['password'])) {
+
+        if (empty($_POST["password"])) {
+                $passErr = "Password is required";
+        } 
+      else {
+                $password = $_POST["password"];
+        }
+}
+
+if(isset($_POST['cpassword'])) {
+
+        if (empty($_POST["cpassword"])) {
+                $conpassErr = "Password needs to be entered again.";
+        } 
+      else {
+                $cpassword = $_POST["cpassword"];
+        }
+}
+
+if($password != $cpassword) {
+        $cpassErr = "Password should be same." ;
+}
+
+if(isset($_POST['checkbox'])) {
+
+        if (empty($_POST["checkbox"])) {
+                $checkboxErr = "Terms and conditions needs to be agreed.";
+        } 
+      
+}
+
+if($fnameErr == "" && $mnameErr == "" && $lnameErr == "" && $genderErr == "" && $cityErr == "" && $stateErr == "" && $dobErr == "" && $addErr == "" && $userErr == "" && $phoneErr == "" && $emailErr == "" && $passErr == "" && $conpassErr == "" && $checkboxErr == "" && $cpassErr == "") {
+
+        $username=$_POST["username"];
+        $password=$_POST["password"];
+        header("Location: http://localhost/getspon/login.php?username=".$username."&password=".$password."");
+
+exit;
+}
+
+}
+
+?>
+
 
 <ul>
-        <li><a class="left"><img src="Images/Mainlogo.jpg" width="100"> </a></li>
+        <li><a class="left"><img src="Images/Mainlogo.jpg" width="100" </a></li>
         <li><a class="left" href="http://localhost/getspon/Home_page.php">Home</a></li>
         <li><a class="left" href="#About">About</a></li>
         <li><a class="left" href="#Contact">Contact</a></li>
         <li><a class="right" href="Log out">Log out</a></li>
-        <li><a class="right" href="http://localhost/Getspon/Signup.php">Sign up</a></li>
-        <li><a class="right" href="http://localhost/Getspon/login.php">Log in</a></li>
+        <li><a class="right" href="http://localhost/getspon/Signup.php">Sign up</a></li>
+        <li><a class="right" href="http://localhost/getspon/login.php">Log in</a></li>
 
 </ul><br><br>
        <div align="center" id="reg">
                   <h1>Register Here</h1><br>
        
-        <form method=post>
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         First Name:
-        <input type = "text"  name = "firstname" class="input-box"> <br>
+        <input type = "text"  name = "firstname" class="input-box" >
+        <span class="error">* <?php echo $fnameErr;?></span>
+        <br><br>
         Middle Name:
         <input type = "text"  name = "middlename" class="input-box" >
-        
+        <span class="error">* <?php echo $mnameErr;?></span>
         <br><br>
         Last Name:
         <input type = "text"  name = "lastname" class="input-box">
+        <span class="error">* <?php echo $lnameErr;?></span>
         <br><br>
         Date of Birth:
         <input type = "date"  name = "dateofbirth" class="input-box" >
+        <span class="error">* <?php echo $dobErr;?></span>
         <br><br>
         Address:<br>
         <textarea type = "textarea"  name = "address" class="input-box" rows="3" cols = "30" ></textarea>
+        <span class="error">* <?php echo $addErr;?></span>
         <br><br>
 City:
 <select name="city" class="input-box" size=1 >
@@ -49,6 +253,7 @@ City:
 <option value="Bangalore">Bangalore</option>
 <option value="Delhi">Delhi</option>
 </select>
+<span class="error">* <?php echo $cityErr;?></span>
 <br><br>
 
 
@@ -60,40 +265,49 @@ State:
 <option value="Punjab">Punjab</option>
 <option value="Rajasthan">Rajasthan</option>
 </select>
+<span class="error">* <?php echo $stateErr;?></span>
 <br><br>
 
 Gender:
         <input type="radio" name="gender" value="male"> Male
         <input type="radio" name="gender" value="female"> Female
         <input type="radio" name="gender" value="other"> Other
+        <span class="error">* <?php echo $genderErr;?></span>
 <br><br>
         Username:
-        <input type = "text"  name = "username" class="input-box" ><br><br>
+        <input type = "text"  name = "username" class="input-box" >
+        <span class="error">* <?php echo $userErr;?></span>
+        <br><br>
         Phone no:
-        <input type = "text"  name = "phoneno" class="input-box" ><br><br>
+        <input type = "text"  name = "phoneno" class="input-box" >
+        <span class="error">* <?php echo $phoneErr;?></span>
+        <br><br>
 Email:
-<input type="text" name="email" placeholder="username@gmail.com" class="input-box"> <br><br>
+<input type="text" name="email" placeholder="username@gmail.com" class="input-box"> 
+<span class="error">* <?php echo $emailErr;?></span>
+<br><br>
+
 Create a new password:
-<input type="password" name="password" class="input-box" placeholder="must be atleast 7 letters" ><br><br>
+<input type="password" name="password" class="input-box" placeholder="must be atleast 7 letters" >
+<span class="error">* <?php echo $passErr;?></span>
+<br><br>
+
 Confirm password:
-<input type="password" name="rpassword" class="input-box" ><br><br>
+<input type="password" name="cpassword" class="input-box" >
+<span class="error">* <?php echo $conpassErr;?></span>
+<br><br>
+
 <Text>By creating an account you agree to our <sa href="#">Terms & Privacy</sa>.</Text><br><br>
-<input type="checkbox" name="checkbox" value="">I agree to the terms and conditions.<br><br>
-       <span class="error">* <?php echo $nameErr;?></span>
+<input type="checkbox" name="checkbox" value="checkbox">I agree to the terms and conditions.
+<span class="error">* <?php echo $checkboxErr;?></span>
+<br><br>
+       
 <input class="reset-button" type="reset" value="Reset">
 <input class="submit-button" type="submit" value="Register">
-        
+
       </form>
-      <?php
-            if(isset($_POST["username"]) && isset($_POST["password"])){
-                $uname=$_POST["username"];
-                $pass=$_POST["password"];
-                header("Location: http://localhost/Getspon/Loginn.php?uname=".$uname."&pass=".$pass."");
-            }else{
-                $nameErr="Invalid Credentials";
-            }
-        ?>
 </div>
+
 
 
 </body>
