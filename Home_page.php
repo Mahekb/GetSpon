@@ -10,15 +10,15 @@
 <br><h1 class="title"><font size=50>GETSPON</font></h1><br> -->
 
 <ul>
-        <li><a class="left"><img src="Images/Mainlogo.jpg" width="100"> </a></li>
-        <li><a class="left" href="http://localhost/getspon/Home_page.php">Home</a></li>
+        <li><a class="left"><img src="Images/Mainlogo.jpg" width="100" </a></li>
+        <li><a class="left" href="http://localhost/Getspon/Home_page.php">Home</a></li>
         <li><a class="left" href="#About">About</a></li>
         <li><a class="left" href="#Contact">Contact</a></li>
         <li><a class="right" href="Log out">Log out</a></li>
-        <li><a class="right" href="http://localhost/getspon/Signup.php">Sign up</a></li>
-        <li><a class="right" href="http://localhost/getspon/login.php">Log in</a></li>
+        <li><a class="right" href="http://localhost/Getspon/Signup.php">Sign up</a></li>
+        <li><a class="right" href="http://localhost/Getspon/Login.php">Log in</a></li>
 
-</ul>        
+</ul><br><br>
 <div>
     <div class="title"> 
         <h1> Welcome to GetSpon, where your search ends.</h1>
