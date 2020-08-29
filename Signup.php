@@ -30,58 +30,69 @@ if (isset($_POST['firstname']) && $_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"];
     $cpassword = $_POST["cpassword"];
 
-    if(isset($_POST['firstname'])) {
+if(isset($_POST['firstname'])) {
 
         if (empty($_POST["firstname"])) {
                 $fnameErr = "First Name is required";
         } 
-        
+        else if (!preg_match("/^[a-zA-Z]*$/",$fname)) {
+                $fnameErr = "Only letters are allowed.";
+        }
         else {
                 $fname = $_POST["firstname"];
         }   
 }   
      
-if (!preg_match("/^[a-zA-Z]*$/",$fname)) {
-        $fnameErr = "Only letters are allowed.";
-}
+
 
 if(isset($_POST['middlename'])) {
 
         if (empty($_POST["middlename"])) {
                 $mnameErr = "Middle Name is required";
         } 
-        
+        else if (!preg_match("/^[a-zA-Z]*$/",$mname)) {
+                $mnameErr = "Only letters are allowed.";
+        }
         else {
                 $mname = $_POST["firstname"];
         }   
 } 
 
-if (!preg_match("/^[a-zA-Z]*$/",$mname)) {
-        $mnameErr = "Only letters are allowed.";
-}
+
 
 if(isset($_POST['lastname'])) {
 
         if (empty($_POST["lastname"])) {
                 $lnameErr = "Last Name is required";
         } 
-
+        else if (!preg_match("/^[a-zA-Z]*$/",$lname)) {
+                $lnameErr = "Only letters are allowed.";
+        }
         else {
                 $lname = $_POST["firstname"];
         }   
 } 
 
-if (!preg_match("/^[a-zA-Z]*$/",$lname)) {
-        $lnameErr = "Only letters are allowed.";
-}
+if(isset($_POST['dateofbirth'])) {
 
-if(isset($_POST['gender'])) {
-
-        if (empty($_POST["gender"])) {
-                $genderErr = "Gender is required";
+        if (empty($_POST["dateofbirth"])) {
+                $dobErr = "DOB is required";
         } 
       else {
-                $gender = $_POST["gender"];
+                $dob = $_POST["dateofbirth"];
+        }
+}
+
+if(isset($_POST['address'])) {
+
+        if (empty($_POST["address"])) {
+                $addErr = "Address is required";
+        } 
+        else if (preg_match("/[^a-zA-Z0-9, .()-]/",$address)) {
+                $addErr = "Special Characters are not allowed.";
+        }
+        else {
+                $address = $_POST["address"];
         }
 }
 
@@ -105,35 +116,13 @@ if(isset($_POST['state'])) {
         }
 }
 
-if(isset($_POST['dateofbirth'])) {
-
-        if (empty($_POST["dateofbirth"])) {
-                $dobErr = "DOB is required";
-        } 
-      else {
-                $dob = $_POST["dateofbirth"];
-        }
+if (empty($_POST["gender"])) {
+        $genderErr = "Gender is required";
+} 
+else {
+        $gender = $_POST["gender"];
 }
 
-if(isset($_POST['address'])) {
-
-        if (empty($_POST["address"])) {
-                $addErr = "Address is required";
-        } 
-      else {
-                $address = $_POST["address"];
-        }
-}
-
-if(isset($_POST['gender'])) {
-
-        if (empty($_POST["gender"])) {
-                $genderErr = "Gender is required";
-        } 
-      else {
-                $gender = $_POST["gender"];
-        }
-}
 
 if(isset($_POST['username'])) {
 
@@ -189,13 +178,13 @@ if($password != $cpassword) {
         $cpassErr = "Password should be same." ;
 }
 
-if(isset($_POST['checkbox'])) {
 
-        if (empty($_POST["checkbox"])) {
-                $checkboxErr = "Terms and conditions needs to be agreed.";
-        } 
+
+if (empty($_POST["checkbox"])) {
+        $checkboxErr = "Terms and conditions needs to be agreed.";
+} 
       
-}
+
 
 if($fnameErr == "" && $mnameErr == "" && $lnameErr == "" && $genderErr == "" && $cityErr == "" && $stateErr == "" && $dobErr == "" && $addErr == "" && $userErr == "" && $phoneErr == "" && $emailErr == "" && $passErr == "" && $conpassErr == "" && $checkboxErr == "" && $cpassErr == "") {
 
