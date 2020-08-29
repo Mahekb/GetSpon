@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>sign up</title>
+    <title>Sign up</title>
     <link rel="stylesheet" type="text/css" href="mystyle.css">
     <style>
      .error {color: #FF0000;}
@@ -190,7 +190,7 @@ if($fnameErr == "" && $mnameErr == "" && $lnameErr == "" && $genderErr == "" && 
 
         $username=$_POST["username"];
         $password=$_POST["password"];
-        header("Location: http://localhost/getspon/login.php?username=".$username."&password=".$password."");
+        header("Location: http://localhost/Getspon/Login.php?username=".$username."&password=".$password."");
 
 exit;
 }
@@ -202,12 +202,12 @@ exit;
 
 <ul>
         <li><a class="left"><img src="Images/Mainlogo.jpg" width="100" </a></li>
-        <li><a class="left" href="http://localhost/getspon/Home_page.php">Home</a></li>
+        <li><a class="left" href="http://localhost/Getspon/Home_page.php">Home</a></li>
         <li><a class="left" href="#About">About</a></li>
         <li><a class="left" href="#Contact">Contact</a></li>
         <li><a class="right" href="Log out">Log out</a></li>
-        <li><a class="right" href="http://localhost/getspon/Signup.php">Sign up</a></li>
-        <li><a class="right" href="http://localhost/getspon/login.php">Log in</a></li>
+        <li><a class="right" href="http://localhost/Getspon/Signup.php">Sign up</a></li>
+        <li><a class="right" href="http://localhost/Getspon/Login.php">Log in</a></li>
 
 </ul><br><br>
        <div align="center" id="reg">
