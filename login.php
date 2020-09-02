@@ -1,3 +1,11 @@
+<?php
+    $login="login";
+    $name="name";
+    if(isset($_GET["username"])){
+        setcookie($login,"visible",time()+86400);
+        setcookie($name,$_GET["username"],time() + 86400);
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
