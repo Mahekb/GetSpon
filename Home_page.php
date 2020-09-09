@@ -1,25 +1,33 @@
 <?php
+session_start();
+?>
+
+<?php
   $islogin="hidden";
   $islogout="visible";
-  $name="name";
-  $login="login";
-  $hname="";
-  if(isset($_COOKIE[$name]) && isset($_COOKIE[$login])){
-    $islogin=$_COOKIE[$login];
-    $hname=$_COOKIE[$name];
+
+  if(isset($_SESSION['email']) && isset($_SESSION['login'])){
+    $islogin=$_SESSION['login'];
     $islogout="hidden";
   }
 ?>
+
 <!DOCTYPE html>
+<?php
+if(isset($_COOKIE['firstname'])) {
+    $name = $_COOKIE['firstname'];
+}
+else {
+    $name = "";
+}
+
+?>
+
 <html>
 <head>
 <title>GetSpon</title>
 <link rel="stylesheet" type="text/css" href="mystyle.css">
 </head>
-
-<!-- <img src="Images/logo.jpg" height = "100" width="100" class="left">
-
-<br><h1 class="title"><font size=50>GETSPON</font></h1><br> -->
 
 <ul>
         <li><a class="left"><img src="Images/Mainlogo.jpg" width="100"> </a></li>
@@ -34,7 +42,7 @@
 </ul>        
 <div>
     <div class="title"> 
-        <h1> Welcome <?php echo "$hname"?> to GetSpon, where your search ends.</h1>
+        <h1> Welcome <?php echo "$name"?> to GetSpon, where your search ends.</h1>
     </div>
     <div class="Homemain">
        <div>
