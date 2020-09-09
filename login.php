@@ -1,12 +1,29 @@
 <?php
-    $login="login";
-    $name="name";
-    if(isset($_GET["username"])){
-        setcookie($login,"visible",time()+86400);
-        setcookie($name,$_GET["username"],time() + 86400);
-    }
+session_start();
 ?>
+
 <!DOCTYPE html>
+
+<?php
+if(isset($_COOKIE['email'])) {
+    $email = $_COOKIE['email'];
+}
+else {
+    $email = "";
+}
+
+?>
+
+<?php
+    if (isset($_POST['emailid']) && $_SERVER["REQUEST_METHOD"] == "POST") {
+    $emaill = $_POST["emailid"];
+    $_SESSION["login"] = "visible" ;
+    $_SESSION["email"] = $emaill ;
+    }
+
+
+    ?>
+
 <html lang="en">
 <head>
     <title>Login</title>
@@ -22,7 +39,10 @@
         <li><a class="left" href="http://localhost/Getspon/Home_page.php">Home</a></li>
         <li><a class="left" href="#About">About</a></li>
         <li><a class="left" href="#Contact">Contact</a></li>
+        <li><a class="right" href="Log out">Log out</a></li>
         <li><a class="right" href="http://localhost/Getspon/Signup.php">Sign up</a></li>
+        <li><a class="right" href="http://localhost/Getspon/Login.php">Log in</a></li>
+
 </ul><br><br>
 
     <div align="center" id="log">
@@ -30,8 +50,8 @@
         <img src="Images/login.jpg" height = "150" width="150">
     <form method="post" enctype="multipart/form-data" autocomplete="on" >
     <form method=post >
-        <input type = "text"  name = "username" placeholder="Enter user-id" class="input-box" required><br><br>
-        <input type="password" name="password" placeholder="Enter password" class="input-box" required><br><br>
+        <input type = "text"  name = "emailid" placeholder="Enter email-id" class="input-box" required value= <?php echo $email?>><br><br>
+        <input type="password" name="passwordid" placeholder="Enter password" class="input-box" required><br><br>
     <Text class="right"><a href="http://localhost/Getspon/Signup.php">Forgot Password?</a></Text><br><br>
        
     <span class="error">* <?php echo $nameErr;?></span><br>
@@ -43,11 +63,11 @@
    
 <Text>Don't have an account? <a href="http://localhost/Getspon/Signup.php">Sign Up</a></Text><br><br>
 <?php
-            $un=$_GET["username"];
-            $ps=$_GET["password"];
-            if(isset($_POST["username"]) && isset($_POST["password"])){
-                if($un==$_POST["username"] && $ps==$_POST["password"]){
-                    header("Location: http://localhost/Getspon/Home_page.php");
+            $un=$email;
+            $ps=$_GET['password'];
+            if(isset($_POST["emailid"]) && isset($_POST["passwordid"])){
+                if($un==$_POST["emailid"] && $ps==$_POST["passwordid"]){
+                    header("Location: http://localhost/Getspon/Home_page2s.php");
                 }else{
                    $nameErr="Invalid credentials";
                }
