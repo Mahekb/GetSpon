@@ -36,10 +36,6 @@ else {
     
 <ul>
         <li><a class="left"><img src="Images/Mainlogo.jpg" width="100" </a></li>
-        <li><a class="left" href="http://localhost/Getspon/Home_page.php">Home</a></li>
-        <li><a class="left" href="#About">About</a></li>
-        <li><a class="left" href="#Contact">Contact</a></li>
-        <li><a class="right" href="Log out">Log out</a></li>
         <li><a class="right" href="http://localhost/Getspon/Signup.php">Sign up</a></li>
         <li><a class="right" href="http://localhost/Getspon/Login.php">Log in</a></li>
 
@@ -67,7 +63,7 @@ else {
             $ps=$_GET['password'];
             if(isset($_POST["emailid"]) && isset($_POST["passwordid"])){
                 if($un==$_POST["emailid"] && $ps==$_POST["passwordid"]){
-                    header("Location: http://localhost/Getspon/Home_page2s.php");
+                    header("Location: http://localhost/Getspon/Home_page.php");
                 }else{
                    $nameErr="Invalid credentials";
                }
