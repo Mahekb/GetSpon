@@ -1,4 +1,44 @@
 <!DOCTYPE html>
+
+<?php
+if(isset($_POST['firstname'])) {
+    if (!empty($_POST["firstname"])) {
+        $cookie_value=$_POST["firstname"];
+        setcookie("firstname",$cookie_value, time() + (86400 * 30), "/");
+    }
+}
+
+if(isset($_POST['city'])) {
+    if (!empty($_POST["city"])) {
+        $cookie_value=$_POST["city"];
+        setcookie("city",$cookie_value, time() + (86400 * 30), "/");
+    }
+}
+
+if(isset($_POST['username'])) {
+    if (!empty($_POST["username"])) {
+        $cookie_value=$_POST["username"];
+        setcookie("username",$cookie_value, time() + (86400 * 30), "/");
+    }
+}
+
+if(isset($_POST['phoneno'])) {
+    if (!empty($_POST["phoneno"])) {
+        $cookie_value=$_POST["phoneno"];
+        setcookie("phoneno",$cookie_value, time() + (86400 * 30), "/");
+    }
+}
+
+if(isset($_POST['email'])) {
+    if (!empty($_POST["email"])) {
+        $cookie_value=$_POST["email"];
+        setcookie("email",$cookie_value, time() + (86400 * 30), "/");
+    }
+}
+
+?>
+
+
 <html lang="en">
 <head>
     <title>Sign up</title>
@@ -17,8 +57,8 @@ $addErr = $userErr = $phoneErr = $emailErr = $passErr = $conpassErr = $cpassErr 
 
 if (isset($_POST['firstname']) && $_SERVER["REQUEST_METHOD"] == "POST") {
     $fname = $_POST["firstname"];
-    $mname = $_POST["firstname"];
-    $lname = $_POST["firstname"];
+    $mname = $_POST["middlename"];
+    $lname = $_POST["lastname"];
     $dob = $_POST["dateofbirth"];
     $address = $_POST["address"];
     $city = $_POST["city"];
@@ -188,9 +228,7 @@ if (empty($_POST["checkbox"])) {
 
 if($fnameErr == "" && $mnameErr == "" && $lnameErr == "" && $genderErr == "" && $cityErr == "" && $stateErr == "" && $dobErr == "" && $addErr == "" && $userErr == "" && $phoneErr == "" && $emailErr == "" && $passErr == "" && $conpassErr == "" && $checkboxErr == "" && $cpassErr == "") {
 
-        $username=$_POST["username"];
-        $password=$_POST["password"];
-        header("Location: http://localhost/Getspon/Login.php?username=".$username."&password=".$password."");
+        header("Location: http://localhost/Getspon/Login.php?email=".$email."&password=".$password."");
 
 exit;
 }
@@ -215,7 +253,7 @@ exit;
        
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         First Name:
-        <input type = "text"  name = "firstname" class="input-box" >
+        <input type = "text"  name = "firstname" class="input-box">
         <span class="error">* <?php echo $fnameErr;?></span>
         <br><br>
         Middle Name:
