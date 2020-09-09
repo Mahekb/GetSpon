@@ -232,7 +232,6 @@ if($fnameErr == "" && $mnameErr == "" && $lnameErr == "" && $genderErr == "" && 
 
 exit;
 }
-
 }
 
 ?>
