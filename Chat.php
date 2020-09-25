@@ -7,11 +7,10 @@
         <style>
             .error {color: #FF0000;}
         </style>
-        
     </head>
     <body>
         <ul>
-            <li><a class="left"><img src="Images/Mainlogo.jpg" alt="avatar" width="100"> </a></li>
+            <li><a class="left"><img src="Images/Mainlogo.jpg" alt="Getspon" width="100"> </a></li>
             <li><a class="left" href="http://localhost/Getspon/Home_page.php">Home</a></li>
             <li><a class="left" href="#About">About</a></li>
             <li><a class="left" href="#Contact">Contact</a></li>
@@ -19,6 +18,7 @@
         </ul>
         <div id="log">
             <center><h1>Your Messages</h1></center>
+            <div id="log2">
             <div class="tab">
                 <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg" alt="avatar"/>
                 <div class="diss">
@@ -47,7 +47,22 @@
                     <div class="message">Any Messages</div>
                 </div>
             </div>
-            
+            </div>
+            <div id="log1">
+            <div class="tab1">
+                <button id="back" onclick="back()"><-</button>
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg" alt="avatar"/>
+                <div class="diss">
+                    <div class="name"><b>Mahek Baru</b></div>
+                </div>
+            </div>
+            <div class="messagetab">
+                <div class="bottomarea">
+                    <textarea id="message" name="message" rows="2" cols="70"></textarea>
+                    <button id="back">--></button>
+                </div>
+            </div>
+            </div>
         </div>
         <script src="Chats.js"></script>
     </body>
