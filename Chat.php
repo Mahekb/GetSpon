@@ -29,7 +29,7 @@
             <div class="tab">
                 <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_03.jpg" alt="avatar" />
                 <div class="diss"> 
-                    <div class="name"><b>Jainam Meheta</b></div>
+                    <div class="name"><b>Jainam Mehta</b></div>
                     <div class="message">Any Messages</div>
                 </div>
             </div>
