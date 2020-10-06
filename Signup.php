@@ -227,7 +227,34 @@ if (empty($_POST["checkbox"])) {
 
 
 if($fnameErr == "" && $mnameErr == "" && $lnameErr == "" && $genderErr == "" && $cityErr == "" && $stateErr == "" && $dobErr == "" && $addErr == "" && $userErr == "" && $phoneErr == "" && $emailErr == "" && $passErr == "" && $conpassErr == "" && $checkboxErr == "" && $cpassErr == "") {
+        
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "Getspon";
+        
+        $conn = mysqli_connect($servername, $username, $password, $dbname);
+        
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+        $username1 = $_POST["username"];
+        $password1 = $_POST["password"];
 
+        $query = "INSERT INTO user_details VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+
+        $pst = mysqli_prepare($conn,$query);
+
+        mysqli_stmt_bind_param($pst,"sssssssssiss",$fname,$mname,$lname,$dob,$address,$city,$state,$gender,$username1,$phoneno,$email,$password1);
+
+        mysqli_stmt_execute($pst);	
+
+        $getResult = mysqli_stmt_get_result($pst);	
+
+        mysqli_stmt_close($pst);
+
+        $conn->close();
+    
         header("Location: http://localhost/Getspon/Login.php?email=".$email."&password=".$password."");
 
 exit;
