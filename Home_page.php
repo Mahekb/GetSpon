@@ -6,7 +6,7 @@ session_start();
   $islogin="hidden";
   $islogout="visible";
 
-  if(isset($_SESSION['email']) && isset($_SESSION['login'])){
+  if(isset($_SESSION['username']) && isset($_SESSION['login'])){
     $islogin=$_SESSION['login'];
     $islogout="hidden";
   }
@@ -34,10 +34,12 @@ else {
         <li><a class="left" href="http://localhost/Getspon/Home_page.php">Home</a></li>
         <li><a class="left" href="#About">About</a></li>
         <li><a class="left" href="#Contact">Contact</a></li>
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Events.php">Add new Event</a></li>
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Startup.php">Add your Startup</a></li>
         <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Chat.php">Chat</a></li>
         <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Logout.php">Log out</a></li>
         <li style="visibility:<?php echo "$islogout"?>"><a class="right" href="http://localhost/Getspon/Signup.php">Sign up</a></li>
-        <li style="visibility:<?php echo "$islogout"?>"><a class="right" href="http://localhost/Getspon/Login.php">Log in</a></li>
+        <li style="visibility:<?php echo "$islogout"?>"><a class="right" href="http://localhost/Getspon/login.php">Log in</a></li>
 
 </ul>        
 <div>
