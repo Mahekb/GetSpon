@@ -19,6 +19,8 @@ if(isset($_POST['stupname'])) {
 
         if (empty($_POST["stupname"])) {
                 $stnameErr = "Startup Name is required";
+        }else{
+                $stname=$_POST["stupname"];
         }
 }   
      
@@ -32,7 +34,7 @@ if(isset($_POST['stupneed'])) {
                 $addErr = "Special Characters are not allowed.";
         }
         else {
-                $status = $_POST["stupneed"];
+                $stneed = $_POST["stupneed"];
         }
 }
 
@@ -42,7 +44,7 @@ if(isset($_POST['status'])) {
                 $cityErr = "Please select your status";
         } 
       else {
-                $city = $_POST["status"];
+                $status = $_POST["status"];
         }
 }
 if(isset($_POST['phoneno'])) {
@@ -51,7 +53,7 @@ if(isset($_POST['phoneno'])) {
                 $phoneErr = "Phone number is required";
         } 
       else {
-                $phoneno = $_POST["phoneno"];
+                $phoneno = $_POST["phoneno"]+0;
         }
 }
 
@@ -69,13 +71,29 @@ if(isset($_POST['email'])) {
     $FileType = strtolower(pathinfo($_FILES["fileUpload"]["name"],PATHINFO_EXTENSION));
     if (empty($_FILES["fileUpload"])) {
             $fileErr = "File is required";
-    } else if($FileType != 'doc' && $FileType != 'docx' && $FileType != 'pdf'){
+    } else if($FileType != 'png' && $FileType != 'docx' && $FileType != 'pdf'){
             $fileErr = "File should be of doc,docx or pdf format only";
     }
 
 
 if($stnameErr == "" && $statusErr == "" && $fileErr == "" && $addErr == "" && $ $phoneErr == "" && $emailErr == "") {
-
+    $conn=mysqli_connect("localhost","root","","Getspon");
+    if(!$conn){
+        die("Connection failed:".mysqli_connect_error());
+    }
+    if(isset($_POST['submit'])){
+        $links="-";
+        $uname=$_SESSION['username'];
+        $filess=file_get_contents($_FILES['fileUpload']['tmp_name']);
+        if(isset($_POST['links'])){
+                $links=$_POST['links'];
+        }    
+        $query="INSERT INTO Startups (Username,Startup_Name,Reason,emp_Status,phone_no,email,links,Ifile) VALUES (?,?,?,?,?,?,?,?)";
+        $stmt=mysqli_prepare($conn,$query);
+        mysqli_stmt_bind_param($stmt,"ssssissb",$uname,$stname,$stneed,$status,$phoneno,$email,$links,$filess);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
         header("Location: http://localhost/Getspon/Home_page.php");
 
         exit();
@@ -112,12 +130,15 @@ if($stnameErr == "" && $statusErr == "" && $fileErr == "" && $addErr == "" && $ 
                 <input type="text" name="email" placeholder="username@gmail.com" class="input-box"> 
                 <span class="error">* <?php echo $emailErr;?></span>
                 <br><br>
+                Any other links(optional):
+                <input type="text" name="links" placeholder="Only Startup related" class="input-box">
+                <br><br>
                 Upload Your Startup Full Detail here(doc,docx,pdf file format only allowed)<br>
                 <input type="file" name="fileUpload" id="fileUpload">
                 <span class="error">* <?php echo $fileErr;?></span>
                 <br><br>
                 <input class="reset-button" type="reset" value="Reset">
-                <input class="submit-button" type="submit" value="Register">
+                <input class="submit-button" type="submit" name="submit" value="Register">
             </form>
         </div>
     </body>
