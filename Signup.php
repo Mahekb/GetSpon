@@ -230,10 +230,10 @@ if($fnameErr == "" && $mnameErr == "" && $lnameErr == "" && $genderErr == "" && 
         
         $servername = "localhost";
         $username = "root";
-        $password = "";
+        $passworddb = "";
         $dbname = "Getspon";
         
-        $conn = mysqli_connect($servername, $username, $password, $dbname);
+        $conn = mysqli_connect($servername, $username, $passworddb, $dbname);
         
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
@@ -255,7 +255,7 @@ if($fnameErr == "" && $mnameErr == "" && $lnameErr == "" && $genderErr == "" && 
 
         $conn->close();
     
-        header("Location: http://localhost/Getspon/Login.php?email=".$email."&password=".$password."");
+        header("Location: http://localhost/Getspon/Login.php?username=".$username1."&password=".$password."");
 
 exit;
 }
