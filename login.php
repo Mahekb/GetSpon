@@ -14,16 +14,6 @@ else {
 
 ?>
 
-<?php
-    if (isset($_POST['uname']) && $_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST["uname"];
-    $_SESSION["login"] = "visible" ;
-    $_SESSION["username"] = $username ;
-    }
-
-
-    ?>
-
 <html lang="en">
 <head>
     <title>Login</title>
@@ -58,14 +48,33 @@ else {
    
 <Text>Don't have an account? <a href="http://localhost/Getspon/Signup.php">Sign Up</a></Text><br><br>
 <?php
-            $un=$userna;
-            $ps=$_GET['password'];
+            // $un=$userna;
+            // $ps=$_GET['password'];
+
             if(isset($_POST["uname"]) && isset($_POST["passwordid"])){
-                if($un==$_POST["uname"] && $ps==$_POST["passwordid"]){
-                    header("Location: http://localhost/Getspon/Home_page.php");
-                }else{
-                   $nameErr="Invalid credentials";
-               }
+                $une=$_POST['uname'];
+                $pss=$_POST['passwordid'];
+                    $conn=mysqli_connect("localhost","root","","Getspon");
+                    if(!$conn){
+                        die("Connection failed:".mysqli_connect_error());
+                    }
+                    $stmt = $conn->prepare("SELECT Username, Password1 FROM user_details WHERE Username=? AND  Password1=? LIMIT 1");
+                    $stmt->bind_param('ss', $une, $pss);
+                    $stmt->execute();
+                    $stmt->bind_result($username, $password);
+                    $stmt->store_result();
+        
+                    if($stmt->num_rows == 1 )
+                    { 
+                        $username = $_POST["uname"];
+                        $_SESSION["login"] = "visible" ;
+                        $_SESSION["username"] = $username ;
+                        header("Location: http://localhost/Getspon/Home_page.php");
+                    }
+                    else{
+                        echo 'The username or password are incorrect!';
+                    }
+                    $stmt->close();
             }
 ?>
 
