@@ -1,31 +1,11 @@
 <!DOCTYPE html>
 
 <?php
-if(isset($_POST['firstname'])) {
-    if (!empty($_POST["firstname"])) {
-        $cookie_value=$_POST["firstname"];
-        setcookie("firstname",$cookie_value, time() + (86400 * 30), "/");
-    }
-}
-
-if(isset($_POST['city'])) {
-    if (!empty($_POST["city"])) {
-        $cookie_value=$_POST["city"];
-        setcookie("city",$cookie_value, time() + (86400 * 30), "/");
-    }
-}
 
 if(isset($_POST['username'])) {
     if (!empty($_POST["username"])) {
         $cookie_value=$_POST["username"];
         setcookie("username",$cookie_value, time() + (86400 * 30), "/");
-    }
-}
-
-if(isset($_POST['phoneno'])) {
-    if (!empty($_POST["phoneno"])) {
-        $cookie_value=$_POST["phoneno"];
-        setcookie("phoneno",$cookie_value, time() + (86400 * 30), "/");
     }
 }
 
@@ -94,7 +74,7 @@ if(isset($_POST['middlename'])) {
                 $mnameErr = "Only letters are allowed.";
         }
         else {
-                $mname = $_POST["firstname"];
+                $mname = $_POST["middlename"];
         }   
 } 
 
@@ -109,7 +89,7 @@ if(isset($_POST['lastname'])) {
                 $lnameErr = "Only letters are allowed.";
         }
         else {
-                $lname = $_POST["firstname"];
+                $lname = $_POST["lastname"];
         }   
 } 
 
@@ -255,7 +235,7 @@ if($fnameErr == "" && $mnameErr == "" && $lnameErr == "" && $genderErr == "" && 
 
         $conn->close();
     
-        header("Location: http://localhost/Getspon/Login.php?username=".$username1."&password=".$password."");
+        header("Location: http://localhost/Getspon/Login.php?username=".$username1."&password=".$password1."");
 
 exit;
 }
