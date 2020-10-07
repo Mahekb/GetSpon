@@ -1,37 +1,8 @@
-<!DOCTYPE html>
-
 <?php
-if(isset($_POST['eventname'])) {
-    if (!empty($_POST["eventname"])) {
-        $cookie_value=$_POST["eventname"];
-        setcookie("eventname",$cookie_value, time() + (86400 * 30), "/");
-    }
-}
-
-
-if(isset($_POST['city'])) {
-    if (!empty($_POST["city"])) {
-        $cookie_value=$_POST["city"];
-        setcookie("city",$cookie_value, time() + (86400 * 30), "/");
-    }
-}
-
-if(isset($_POST['phoneno'])) {
-    if (!empty($_POST["phoneno"])) {
-        $cookie_value=$_POST["phoneno"];
-        setcookie("phoneno",$cookie_value, time() + (86400 * 30), "/");
-    }
-}
-
-if(isset($_POST['email'])) {
-    if (!empty($_POST["email"])) {
-        $cookie_value=$_POST["email"];
-        setcookie("email",$cookie_value, time() + (86400 * 30), "/");
-    }
-}
-
+session_start();
 ?>
 
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -57,7 +28,10 @@ if(isset($_POST['eventname'])) {
         } 
         else if (!preg_match("/^[a-zA-Z]*$/",$fname)) {
                 $enameErr = "Only letters are allowed.";
-        }  
+        } 
+        else {
+                $ename = $_POST["eventname"];
+        }
 }   
      
 
@@ -129,8 +103,29 @@ if(isset($_POST['email'])) {
 
 if($enameErr == "" && $cityErr == "" && $stateErr == "" && $addErr == "" && $ $phoneErr == "" && $phone2Err == "" && $emailErr == "") {
 
-        header("Location: http://localhost/Getspon/Signup.php");
+        $conn = mysqli_connect("localhost","root","","Getspon");
+        
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+        $uname=$_SESSION['username'];
+        
+        $query = "INSERT INTO Events VALUES (?,?,?,?,?,?,?,?)";
 
+        $pst = mysqli_prepare($conn,$query);
+
+        mysqli_stmt_bind_param($pst,"sssssiis",$uname,$ename,$address,$city,$state,$phoneno,$phoneno2,$email);
+
+        mysqli_stmt_execute($pst);	
+
+        $getResult = mysqli_stmt_get_result($pst);	
+
+        mysqli_stmt_close($pst);
+
+        $conn->close();
+
+
+        header("Location: http://localhost/Getspon/Home_page.php");
 exit();
 }
 
