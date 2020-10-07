@@ -1,24 +1,4 @@
 <!DOCTYPE html>
-
-<?php
-
-if(isset($_POST['username'])) {
-    if (!empty($_POST["username"])) {
-        $cookie_value=$_POST["username"];
-        setcookie("username",$cookie_value, time() + (86400 * 30), "/");
-    }
-}
-
-if(isset($_POST['email'])) {
-    if (!empty($_POST["email"])) {
-        $cookie_value=$_POST["email"];
-        setcookie("email",$cookie_value, time() + (86400 * 30), "/");
-    }
-}
-
-?>
-
-
 <html lang="en">
 <head>
     <title>Sign up</title>
