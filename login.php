@@ -52,27 +52,24 @@ else {
             if(isset($_POST["uname"]) && isset($_POST["passwordid"])){
                 $une=$_POST['uname'];
                 $pss=$_POST['passwordid'];
-                $pss1=password_hash($pss, PASSWORD_DEFAULT);
                     $conn=mysqli_connect("localhost","root","","Getspon");
                     if(!$conn){
                         die("Connection failed:".mysqli_connect_error());
                     }
-                    $stmt = $conn->prepare("SELECT Username, Password1 FROM user_details WHERE Username=? AND  Password1=? LIMIT 1");
-                    $stmt->bind_param('ss', $une, $pss1);
+                    $stmt = $conn->prepare("SELECT Username, Password1 FROM user_details WHERE Username=?");
+                    $stmt->bind_param('s', $une);
                     $stmt->execute();
-                    $stmt->bind_result($username, $password);
-                    $stmt->store_result();
-        
-                    if($stmt->num_rows == 1 )
-                    { 
-                        $username = $_POST["uname"];
-                        $_SESSION["login"] = "visible" ;
-                        $_SESSION["username"] = $username ;
-                        header("Location: http://localhost/Getspon/Home_page.php");
+                    $result = $stmt->get_result();
+                    while ($row = $result->fetch_assoc()) {
+                        if(password_verify($pss,$row['Password1'])){
+                            $username = $_POST["uname"];
+                            $_SESSION["login"] = "visible" ;
+                            $_SESSION["username"] = $username ;
+                            header("Location: http://localhost/Getspon/Home_page.php");
+                        }
                     }
-                    else{
-                        echo '<span class="error">The username or password are incorrect!'.$pss1.'<span><br><br>';
-                    }
+                    echo '<span class="error">The username or password are incorrect!'.$pss1.'<span><br><br>';
+                    
                     $stmt->close();
             }
 ?>
