@@ -196,8 +196,8 @@ if(isset($_POST['cpassword'])) {
         }
 }
 
-if(isset($_POST['password']) != isset($_POST['cpassword'])) {
-        $cpassErr = "Passwords should be same." ;
+if($_POST['password'] != $_POST['cpassword']) {
+        $conpassErr = "Passwords should be same." ;
 }
 
 
