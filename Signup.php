@@ -217,8 +217,10 @@ if($fnameErr == "" && $mnameErr == "" && $lnameErr == "" && $genderErr == "" && 
         $query = "INSERT INTO user_details VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
         $pst = mysqli_prepare($conn,$query);
+    
+        $password1 = password_hash($password, PASSWORD_DEFAULT);
 
-        mysqli_stmt_bind_param($pst,"sssssssssiss",$fname,$mname,$lname,$dob,$address,$city,$state,$gender,$username,$phoneno,$email,$password);
+        mysqli_stmt_bind_param($pst,"sssssssssiss",$fname,$mname,$lname,$dob,$address,$city,$state,$gender,$username,$phoneno,$email,$password1);
 
         mysqli_stmt_execute($pst);	
 
