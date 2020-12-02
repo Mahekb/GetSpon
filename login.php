@@ -48,18 +48,17 @@ else {
    
 <Text>Don't have an account? <a href="http://localhost/Getspon/Signup.php">Sign Up</a></Text><br><br>
 <?php
-            // $un=$userna;
-            // $ps=$_GET['password'];
 
             if(isset($_POST["uname"]) && isset($_POST["passwordid"])){
                 $une=$_POST['uname'];
                 $pss=$_POST['passwordid'];
+                $pss1=password_hash($pss, PASSWORD_DEFAULT);
                     $conn=mysqli_connect("localhost","root","","Getspon");
                     if(!$conn){
                         die("Connection failed:".mysqli_connect_error());
                     }
                     $stmt = $conn->prepare("SELECT Username, Password1 FROM user_details WHERE Username=? AND  Password1=? LIMIT 1");
-                    $stmt->bind_param('ss', $une, $pss);
+                    $stmt->bind_param('ss', $une, $pss1);
                     $stmt->execute();
                     $stmt->bind_result($username, $password);
                     $stmt->store_result();
@@ -72,14 +71,14 @@ else {
                         header("Location: http://localhost/Getspon/Home_page.php");
                     }
                     else{
-                        echo 'The username or password are incorrect!';
+                        echo '<span class="error">The username or password are incorrect!'.$pss1.'<span><br><br>';
                     }
                     $stmt->close();
             }
 ?>
 
 
-<Text>-------------------------OR-------------------------</Text><br><br>
+<p class="another">-------------------------OR-------------------------</p>
 
 <button class="loginwithg-button">Login with Google</button>
 <button class="loginwithf-button">Login with Facebook</button>
