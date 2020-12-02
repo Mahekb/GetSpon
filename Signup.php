@@ -16,26 +16,13 @@ $addErr = $userErr = $phoneErr = $emailErr = $passErr = $conpassErr = $cpassErr 
 
 
 if (isset($_POST['firstname']) && $_SERVER["REQUEST_METHOD"] == "POST") {
-    $fname = $_POST["firstname"];
-    $mname = $_POST["middlename"];
-    $lname = $_POST["lastname"];
-    $dob = $_POST["dateofbirth"];
-    $address = $_POST["address"];
-    $city = $_POST["city"];
-    $state = $_POST["state"];
-    $gender = $_POST["gender"];
-    $username = $_POST["username"];
-    $phoneno = $_POST["phoneno"];
-    $email = $_POST["email"];
-    $password = $_POST["password"];
-    $cpassword = $_POST["cpassword"];
 
 if(isset($_POST['firstname'])) {
 
         if (empty($_POST["firstname"])) {
                 $fnameErr = "First Name is required";
         } 
-        else if (!preg_match("/^[a-zA-Z]*$/",$fname)) {
+        else if (!preg_match("/^[a-zA-Z]*$/",$_POST["firstname"])) {
                 $fnameErr = "Only letters are allowed.";
         }
         else {
@@ -50,7 +37,7 @@ if(isset($_POST['middlename'])) {
         if (empty($_POST["middlename"])) {
                 $mnameErr = "Middle Name is required";
         } 
-        else if (!preg_match("/^[a-zA-Z]*$/",$mname)) {
+        else if (!preg_match("/^[a-zA-Z]*$/",$_POST['middlename'])) {
                 $mnameErr = "Only letters are allowed.";
         }
         else {
@@ -65,7 +52,7 @@ if(isset($_POST['lastname'])) {
         if (empty($_POST["lastname"])) {
                 $lnameErr = "Last Name is required";
         } 
-        else if (!preg_match("/^[a-zA-Z]*$/",$lname)) {
+        else if (!preg_match("/^[a-zA-Z]*$/",$_POST["lastname"])) {
                 $lnameErr = "Only letters are allowed.";
         }
         else {
@@ -88,7 +75,7 @@ if(isset($_POST['address'])) {
         if (empty($_POST["address"])) {
                 $addErr = "Address is required";
         } 
-        else if (preg_match("/[^a-zA-Z0-9, .()-]/",$address)) {
+        else if (preg_match("/[^a-zA-Z0-9, .()-]/",$_POST["address"])) {
                 $addErr = "Special Characters are not allowed.";
         }
         else {
@@ -129,7 +116,16 @@ if(isset($_POST['username'])) {
         if (empty($_POST["username"])) {
                 $userErr = "Username is required";
         } 
-      else {
+        else if (!preg_match("/^[a-zA-Z0-9]*$/",$_POST["username"])) {
+                $userErr = "Only letters and numbers are allowed.";
+        }
+        else if (strlen($_POST["username"]) <= 6) {
+                $userErr = "Username must be longer than 6 characters";
+        }  
+        else if (strlen($_POST["username"]) > 20) {
+                $userErr = "Username must be not longer than 20 characters";
+        }      
+        else {
                 $username = $_POST["username"];
         }
 }
@@ -139,16 +135,23 @@ if(isset($_POST['phoneno'])) {
         if (empty($_POST["phoneno"])) {
                 $phoneErr = "Phone number is required";
         } 
+        else if (!preg_match("/\d{10}/",$_POST["phoneno"])) {
+                $phoneErr = "Invalid Phone number.";
+        }
       else {
                 $phoneno = $_POST["phoneno"];
         }
 }
+
 
 if(isset($_POST['email'])) {
 
         if (empty($_POST["email"])) {
                 $emailErr = "Email is required";
         } 
+        else if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+                $emailErr = "Invalid email format";
+              }
       else {
                 $email = $_POST["email"];
         }
@@ -159,7 +162,25 @@ if(isset($_POST['password'])) {
         if (empty($_POST["password"])) {
                 $passErr = "Password is required";
         } 
-      else {
+        else if (strlen($_POST["password"]) <= 6) {
+                $passErr = "Password must be atleast of 7 characters";
+        } 
+        else if (!preg_match("/[A-Z]{1,}/",$_POST["password"])) {
+                $passErr = "Atleast one uppercase letter is required in password.";
+        }
+        else if (!preg_match("/[a-z]{1,}/",$_POST["password"])) {
+                $passErr = "Atleast one lowercase letter is required in password.";
+        }
+        else if (!preg_match("/[0-9]{1,}/",$_POST["password"])) {
+                $passErr = "Atleast one numeric value is required in password.";
+        }
+        else if (!preg_match("/(\W{1,}|[_]{1,})/",$_POST["password"])) {
+                $passErr = "Atleast one special character is required in password.";
+        }
+        else if (preg_match("/[ ]{1,}/",$_POST["password"])) {
+                $passErr = "Spaces are not allowed in password.";
+        }
+        else {
                 $password = $_POST["password"];
         }
 }
@@ -169,15 +190,15 @@ if(isset($_POST['cpassword'])) {
         if (empty($_POST["cpassword"])) {
                 $conpassErr = "Password needs to be entered again.";
         } 
+        
       else {
                 $cpassword = $_POST["cpassword"];
         }
 }
 
-if($password != $cpassword) {
-        $cpassErr = "Password should be same." ;
+if(isset($_POST['password']) != isset($_POST['cpassword'])) {
+        $cpassErr = "Passwords should be same." ;
 }
-
 
 
 if (empty($_POST["checkbox"])) {
@@ -185,27 +206,19 @@ if (empty($_POST["checkbox"])) {
 } 
       
 
-
 if($fnameErr == "" && $mnameErr == "" && $lnameErr == "" && $genderErr == "" && $cityErr == "" && $stateErr == "" && $dobErr == "" && $addErr == "" && $userErr == "" && $phoneErr == "" && $emailErr == "" && $passErr == "" && $conpassErr == "" && $checkboxErr == "" && $cpassErr == "") {
         
-        $servername = "localhost";
-        $username = "root";
-        $passworddb = "";
-        $dbname = "Getspon";
-        
-        $conn = mysqli_connect($servername, $username, $passworddb, $dbname);
+        $conn = mysqli_connect("localhost","root","","Getspon");
         
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
-        $username1 = $_POST["username"];
-        $password1 = $_POST["password"];
 
         $query = "INSERT INTO user_details VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
         $pst = mysqli_prepare($conn,$query);
 
-        mysqli_stmt_bind_param($pst,"sssssssssiss",$fname,$mname,$lname,$dob,$address,$city,$state,$gender,$username1,$phoneno,$email,$password1);
+        mysqli_stmt_bind_param($pst,"sssssssssiss",$fname,$mname,$lname,$dob,$address,$city,$state,$gender,$username,$phoneno,$email,$password);
 
         mysqli_stmt_execute($pst);	
 
@@ -215,7 +228,7 @@ if($fnameErr == "" && $mnameErr == "" && $lnameErr == "" && $genderErr == "" && 
 
         $conn->close();
     
-        header("Location: http://localhost/Getspon/Login.php?username=".$username1."&password=".$password1."");
+        header("Location: http://localhost/Getspon/Login.php?username=".$username."&password=".$password."");
 
 exit;
 }
@@ -271,10 +284,11 @@ City:
 State:
 <select name="state" class="input-box" size=1>
 <option value="--select--">--select--</option>
-<option value="Maharashtra">Maharashtra</option>
 <option value="Gujarat">Gujarat</option>
+<option value="Maharashtra">Maharashtra</option>
 <option value="Punjab">Punjab</option>
 <option value="Rajasthan">Rajasthan</option>
+<option value="Tamil Nadu">Tamil Nadu</option>
 </select>
 <span class="error">* <?php echo $stateErr;?></span>
 <br><br>
@@ -323,4 +337,3 @@ Confirm password:
 
 </body>
 </html>
-
