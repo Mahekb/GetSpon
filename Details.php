@@ -17,7 +17,6 @@
 <?php
 
 $id = $_GET['event_id'];
-echo $id;
 $conn = mysqli_connect("localhost","root","","Getspon");
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
