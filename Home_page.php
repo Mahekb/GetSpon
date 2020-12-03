@@ -13,15 +13,6 @@ session_start();
 ?>
 
 <!DOCTYPE html>
-<?php
-if(isset($_COOKIE['firstname'])) {
-    $name = $_COOKIE['firstname'];
-}
-else {
-    $name = "";
-}
-
-?>
 
 <html>
 <head>
@@ -93,6 +84,40 @@ else {
         </div>
     </div>
 
+<div class="title"> 
+        <h1> Our Upcoming Events</h1>
+    </div>
+
+
+    <div class="flex-container">
+    <?php
+        $conn = mysqli_connect("localhost","root","","Getspon");
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+        $uname=$_SESSION['username'];
+
+        $stmt = $conn->prepare("SELECT Event_id,Event_name,city,Amount,Date1 FROM events");
+        // $stmt->bind_param('s', $uname);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        while ($row = $result->fetch_assoc()) {
+          $eventid = $row['Event_id'];
+          echo '<div> <img src="Images/login.jpg"  width="70">' . '<br/>';
+          echo "<h1>" . $row['Event_name'] . "</h1  >";
+          echo "<h3>Location: " . $row['city'] . "</h3>";
+          echo "<h3>Date: " . $row['Date1'] . "</h3>";
+          echo "<h3>Amount: " . $row['Amount'] . "</h3>";
+          echo '<form action="http://localhost/Getspon/Details.php?event_id='.$eventid.'" method="POST">';
+          echo '<button type="submit" name="submit" class="details">View More</button></form>';
+          echo '</div>';
+        }
+        $stmt->close();
+        $conn->close();
+    ?>
+                 
+</div>
 
 </body>
 </html>
