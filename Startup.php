@@ -2,6 +2,16 @@
 session_start();
 ?>
 
+<?php
+  $islogin="hidden";
+  $islogout="visible";
+
+  if(isset($_SESSION['username']) && isset($_SESSION['login'])){
+    $islogin=$_SESSION['login'];
+    $islogout="hidden";
+  }
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,6 +22,25 @@ session_start();
         </style>
     </head>
     <body>
+
+    <ul>
+        <li><a class="left"><img src="Images/Mainlogo.jpg" width="100"> </a></li>
+        <li><a class="left" href="http://localhost/Getspon/Home_page.php">Home</a></li>
+        <li><a class="left" href="#About">About</a></li>
+        <li><a class="left" href="#Contact">Contact</a></li>
+        
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/profilepage.php">Profile</a></li>
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Logout.php">Log out</a></li>
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Chat.php">Chat</a></li>
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Startup.php">Add your Startup</a></li>
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Events.php">Add new Event</a></li>
+        <li style="visibility:<?php echo "$islogout"?>"><a class="right" href="http://localhost/Getspon/Signup.php">Sign up</a></li>
+        <li style="visibility:<?php echo "$islogout"?>"><a class="right" href="http://localhost/Getspon/Login.php">Log in</a></li>
+
+</ul> <br />
+
+
+
     <?php 
 
 $stnameErr = $needErr = $statusErr = $fileErr = $amountErr = "";
@@ -95,7 +124,7 @@ if($stnameErr == "" && $statusErr == "" && $fileErr == "" && $needErr == "" && $
 
         $target_dir="uploads/";
         $target_file=$target_dir.basename($_FILES["fileUpload"]["name"]);
-        echo move_uploaded_file($_FILES["fileUpload"]["name"].$target_file);
+        echo move_uploaded_file($_FILES["fileUpload"]["name"],$target_file);
         $url=$target_file;
         $filess=file_get_contents($_FILES['fileUpload']['tmp_name']);
         if(isset($_POST['links'])){
