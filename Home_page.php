@@ -46,6 +46,17 @@ session_start();
   padding: 10px;
   background-color: #bae2fd;
 }
+
+
+.go-button {
+  background-color: rgb(0, 81, 255);
+  color: rgb(255, 255, 255);
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 15px;
+  border-radius: 40px;
+  
+}
 </style>
 <link rel="stylesheet" type="text/css" href="mystyle.css">
 </head>
@@ -55,7 +66,6 @@ session_start();
         <li><a class="left" href="http://localhost/Getspon/Home_page.php">Home</a></li>
         <li><a class="left" href="#About">About</a></li>
         <li><a class="left" href="#Contact">Contact</a></li>
-  
         
         <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/profilepage.php">Profile</a></li>
         <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Logout.php">Log out</a></li>
@@ -120,15 +130,58 @@ session_start();
         <h1> Our Upcoming Events</h1>
     </div>
 
+<?php 
+$opt = "--select--";
+$opt2 = "--select--";
+?>
+<div class="right">
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" > 
 
+Sort By:
+<select name="opt" class="input-box" size=1 >
+<option value="--select--">--select--</option>
+<option value="Date">Date</option>
+<option value="Eventname">Event name</option>
+<option value="Amount">Amount</option>
+<option value="City">City</option>
+</select>
+
+<input class="go-button" type="submit" value="Go">
+
+</form>
+</div><br/>
+<?php 
+if(isset($_POST['opt'])) {
+          $opt = $_POST["opt"];
+}
+
+?>
+
+<br><br>
     <div class="flex-container">
+    
     <?php
         $conn = mysqli_connect("localhost","root","","Getspon");
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
 
-        $stmt = $conn->prepare("SELECT Event_id,Event_name,city,Amount,Date1 FROM events ORDER BY Date1");
+        if ($opt=="--select--") {
+          $stmt = $conn->prepare("SELECT Event_id,Event_name,city,Amount,Date1 FROM events ORDER BY Event_id");
+        }
+        else if ($opt=="Date") {
+          $stmt = $conn->prepare("SELECT Event_id,Event_name,city,Amount,Date1 FROM events ORDER BY Date1");
+        }
+        else if ($opt=="Eventname") {
+          $stmt = $conn->prepare("SELECT Event_id,Event_name,city,Amount,Date1 FROM events ORDER BY Event_name");
+        }
+        else if ($opt=="Amount") {
+          $stmt = $conn->prepare("SELECT Event_id,Event_name,city,Amount,Date1 FROM events ORDER BY Amount");
+        }
+        else if ($opt=="City") {
+          $stmt = $conn->prepare("SELECT Event_id,Event_name,city,Amount,Date1 FROM events ORDER BY city");
+        }
+
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -153,15 +206,47 @@ session_start();
         <h1> Startups</h1>
     </div>
 
+<div class="right">
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" > 
+
+Sort By:
+<select name="opt2" class="input-box" size=1 >
+<option value="--select--">--select--</option>
+<option value="Stname">Startup name</option>
+<option value="Amount">Amount</option>
+</select>
+
+<input class="go-button" type="submit" value="Go">
+
+</form>
+</div><br/>
+
+<?php 
+if(isset($_POST['opt2'])) {
+          $opt2 = $_POST["opt2"];
+}
+?>
+<br><br>
 
     <div class="flex-container">
     <?php
+
         $conn = mysqli_connect("localhost","root","","Getspon");
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
 
-        $stmt = $conn->prepare("SELECT Startup_id,Startup_Name,Reason,Amount,links FROM startups");
+        if ($opt2=="--select--") {
+          $stmt = $conn->prepare("SELECT Startup_id,Startup_Name,Reason,Amount,links FROM startups ORDER BY Startup_id");
+        }
+        else if ($opt2=="Amount") {
+          $stmt = $conn->prepare("SELECT Startup_id,Startup_Name,Reason,Amount,links FROM startups ORDER BY Amount");
+        }
+        else if ($opt2=="Stname") {
+          $stmt = $conn->prepare("SELECT Startup_id,Startup_Name,Reason,Amount,links FROM startups ORDER BY Startup_Name");
+        }
+        
+
         $stmt->execute();
         $result = $stmt->get_result();
 
