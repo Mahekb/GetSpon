@@ -10,6 +10,11 @@
   font-size: 15px;
   border-radius:30px;   
 }
+
+body {
+  background-color: rgb(138, 236, 243);
+
+}
     </style>
 </head>
 <body>
@@ -38,14 +43,24 @@ while ($row = $result->fetch_assoc()) {
   echo "<h3Phone no: " . $row['Phoneno'] . "</h3>";
   echo "<h3>Email: " . $row['Email'] . "</h3>";
 }
-echo '<button name="submit" class="details" onclick="myFunction()">Go back</button>';
+
+$stmt->close();
+$conn->close();
+
+echo '<button name="back" class="details" onclick="myFunction()">Go back</button>&emsp;&emsp;&emsp;';
+echo '<button name="chat" class="details" onclick="myFunction2()">Start Chat</button>';
+
 echo '</div>';
 ?>
 
 <script>
 function myFunction() {
   location.replace("http://localhost/Getspon/Home_page.php")
-}   
+} 
+
+function myFunction2() {
+  location.replace("http://localhost/Getspon/Chat.php")
+} 
 </script>
 
 
