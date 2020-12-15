@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,7 +14,7 @@
     <body>
     <?php 
 
-$stnameErr = $fileErr = $statusErr = $addErr =  $phoneErr = $emailErr =  "";
+$stnameErr = $needErr = $statusErr = $fileErr = "";
 
 
 if (isset($_POST['stupname']) && $_SERVER["REQUEST_METHOD"] == "POST") {
@@ -28,10 +32,10 @@ if(isset($_POST['stupname'])) {
 if(isset($_POST['stupneed'])) {
 
         if (empty($_POST["stupneed"])) {
-                $addErr = "Is required";
+                $needErr = "Is required";
         } 
         else if (preg_match("/[^a-zA-Z0-9, .()-]/",$_POST["stupneed"])) {
-                $addErr = "Special Characters are not allowed.";
+                $needErr = "Special Characters are not allowed.";
         }
         else {
                 $stneed = $_POST["stupneed"];
@@ -41,29 +45,10 @@ if(isset($_POST['stupneed'])) {
 if(isset($_POST['status'])) {
 
         if ($_POST['status'] == "--select--") {
-                $cityErr = "Please select your status";
+                $statusErr = "Please select your status";
         } 
       else {
                 $status = $_POST["status"];
-        }
-}
-if(isset($_POST['phoneno'])) {
-
-        if (empty($_POST["phoneno"])) {
-                $phoneErr = "Phone number is required";
-        } 
-      else {
-                $phoneno = $_POST["phoneno"]+0;
-        }
-}
-
-if(isset($_POST['email'])) {
-
-        if (empty($_POST["email"])) {
-                $emailErr = "Email is required";
-        } 
-      else {
-                $email = $_POST["email"];
         }
 }
 
@@ -76,7 +61,7 @@ if(isset($_POST['email'])) {
     }
 
 
-if($stnameErr == "" && $statusErr == "" && $fileErr == "" && $addErr == "" && $ $phoneErr == "" && $emailErr == "") {
+if($stnameErr == "" && $statusErr == "" && $fileErr == "" && $needErr == "" ) {
     $conn=mysqli_connect("localhost","root","","Getspon");
     if(!$conn){
         die("Connection failed:".mysqli_connect_error());
@@ -84,13 +69,25 @@ if($stnameErr == "" && $statusErr == "" && $fileErr == "" && $addErr == "" && $ 
     if(isset($_POST['submit'])){
         $links="-";
         $uname=$_SESSION['username'];
+
+        $stmt = $conn->prepare("SELECT Phoneno, Email FROM user_details WHERE Username=?");
+        $stmt->bind_param('s', $uname);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        $pno = $row['Phoneno'];
+        $email = $row['Email'];
+        $stmt->close();
+
+
         $filess=file_get_contents($_FILES['fileUpload']['tmp_name']);
         if(isset($_POST['links'])){
                 $links=$_POST['links'];
         }    
         $query="INSERT INTO Startups (Username,Startup_Name,Reason,emp_Status,phone_no,email,links,Ifile) VALUES (?,?,?,?,?,?,?,?)";
         $stmt=mysqli_prepare($conn,$query);
-        mysqli_stmt_bind_param($stmt,"ssssissb",$uname,$stname,$stneed,$status,$phoneno,$email,$links,$filess);
+        mysqli_stmt_bind_param($stmt,"sssssssb",$uname,$stname,$stneed,$status,$pno,$email,$links,$filess);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
     }
@@ -111,25 +108,19 @@ if($stnameErr == "" && $statusErr == "" && $fileErr == "" && $addErr == "" && $ 
                 <br><br>
                 Reason of Bringing Up this Idea:<br>
                 <textarea type = "textarea"  name = "stupneed" class="input-box" rows="3" cols = "30" ></textarea>
-                <span class="error">* <?php echo $addErr;?></span>
+                <span class="error">* <?php echo $needErr;?></span>
                 <br><br>
                 Employment Status:
                 <select name="status" class="input-box" size=1 >
                     <option value="--select--">--select--</option>
                     <option value="Student">Student</option>
+                    <option value="Teacher">Teacher</option>
                     <option value="Emplyoed">Emplyoyed</option>
                     <option value="UnEmplyoed">UnEmplyoed</option>
                 </select>
                 <span class="error">* <?php echo $statusErr;?></span>
                 <br><br>
-                Phone no:
-                <input type = "text"  name = "phoneno" class="input-box" >
-                <span class="error">* <?php echo $phoneErr;?></span>
-                <br><br>
-                Email:
-                <input type="text" name="email" placeholder="username@gmail.com" class="input-box"> 
-                <span class="error">* <?php echo $emailErr;?></span>
-                <br><br>
+                
                 Any other links(optional):
                 <input type="text" name="links" placeholder="Only Startup related" class="input-box">
                 <br><br>
