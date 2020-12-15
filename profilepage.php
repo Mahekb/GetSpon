@@ -101,7 +101,7 @@ $username=$_SESSION['username'];
         <li><a class="right" href="http://localhost/Getspon/Events.php">Add new Event</a></li>
         <li><a class="right" href="http://localhost/Getspon/Startup.php">Add your Startup</a></li>
         <li><a class="right" href="http://localhost/Getspon/Chat.php">Chat</a></li>
-</ul>    
+</ul>    <br/>
         <?php
             
             $phoneno=$address=$gender=$emailid=$city=$state="";
