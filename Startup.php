@@ -14,7 +14,7 @@ session_start();
     <body>
     <?php 
 
-$stnameErr = $needErr = $statusErr = $fileErr = "";
+$stnameErr = $needErr = $statusErr = $fileErr = $amountErr = "";
 
 
 if (isset($_POST['stupname']) && $_SERVER["REQUEST_METHOD"] == "POST") {
@@ -52,6 +52,19 @@ if(isset($_POST['status'])) {
         }
 }
 
+if(isset($_POST['amount'])) {
+
+        if (empty($_POST["amount"])) {
+                $amountErr = "Enter amount value";
+        } 
+        else if ((int)$_POST["amount"] < 10000 or (int)$_POST["amount"] > 200000) {
+                $amountErr = "Amount should be between 10,000 and 200,000.";
+        }
+        else {    
+                $amount =  (int)$_POST["amount"];
+        }
+}
+
    
     $FileType = strtolower(pathinfo($_FILES["fileUpload"]["name"],PATHINFO_EXTENSION));
     if (empty($_FILES["fileUpload"])) {
@@ -61,7 +74,7 @@ if(isset($_POST['status'])) {
     }
 
 
-if($stnameErr == "" && $statusErr == "" && $fileErr == "" && $needErr == "" ) {
+if($stnameErr == "" && $statusErr == "" && $fileErr == "" && $needErr == "" && $amountErr == "" ) {
     $conn=mysqli_connect("localhost","root","","Getspon");
     if(!$conn){
         die("Connection failed:".mysqli_connect_error());
@@ -85,9 +98,9 @@ if($stnameErr == "" && $statusErr == "" && $fileErr == "" && $needErr == "" ) {
         if(isset($_POST['links'])){
                 $links=$_POST['links'];
         }    
-        $query="INSERT INTO Startups (Username,Startup_Name,Reason,emp_Status,phone_no,email,links,Ifile) VALUES (?,?,?,?,?,?,?,?)";
+        $query="INSERT INTO Startups (Username,Startup_Name,Reason,emp_Status,phone_no,email,Amount,links,Ifile) VALUES (?,?,?,?,?,?,?,?,?)";
         $stmt=mysqli_prepare($conn,$query);
-        mysqli_stmt_bind_param($stmt,"sssssssb",$uname,$stname,$stneed,$status,$pno,$email,$links,$filess);
+        mysqli_stmt_bind_param($stmt,"ssssssssb",$uname,$stname,$stneed,$status,$pno,$email,$amount,$links,$filess);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
     }
@@ -119,6 +132,11 @@ if($stnameErr == "" && $statusErr == "" && $fileErr == "" && $needErr == "" ) {
                     <option value="UnEmplyoed">UnEmplyoed</option>
                 </select>
                 <span class="error">* <?php echo $statusErr;?></span>
+                <br><br>
+
+                Enter amount:
+                <input type = "text"  name = "amount" class="input-box">
+                <span class="error">* <?php echo $amountErr;?></span>
                 <br><br>
                 
                 Any other links(optional):
