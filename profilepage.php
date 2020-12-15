@@ -1,5 +1,14 @@
 <?php
 session_start();
+
+  $islogin="hidden";
+  $islogout="visible";
+
+  if(isset($_SESSION['username']) && isset($_SESSION['login'])){
+    $islogin=$_SESSION['login'];
+    $islogout="hidden";
+  }
+
 $conn=mysqli_connect("localhost","root","","Getspon");
 if(!$conn){
     die("Connection failed:".mysqli_connect_error());
@@ -97,11 +106,18 @@ $username=$_SESSION['username'];
     <ul>
         <li><a class="left"><img src="Images/Mainlogo.jpg" width="100"> </a></li>
         <li><a class="left" href="http://localhost/Getspon/Home_page.php">Home</a></li>
-        <li><a class="right" href="http://localhost/Getspon/Logout.php">Log out</a></li>
-        <li><a class="right" href="http://localhost/Getspon/Events.php">Add new Event</a></li>
-        <li><a class="right" href="http://localhost/Getspon/Startup.php">Add your Startup</a></li>
-        <li><a class="right" href="http://localhost/Getspon/Chat.php">Chat</a></li>
-</ul>    <br/>
+        <li><a class="left" href="#About">About</a></li>
+        <li><a class="left" href="#Contact">Contact</a></li>
+        
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/profilepage.php">Profile</a></li>
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Logout.php">Log out</a></li>
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Chat.php">Chat</a></li>
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Startup.php">Add your Startup</a></li>
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Events.php">Add new Event</a></li>
+        <li style="visibility:<?php echo "$islogout"?>"><a class="right" href="http://localhost/Getspon/Signup.php">Sign up</a></li>
+        <li style="visibility:<?php echo "$islogout"?>"><a class="right" href="http://localhost/Getspon/Login.php">Log in</a></li>
+
+</ul> <br />
         <?php
             
             $phoneno=$address=$gender=$emailid=$city=$state="";
