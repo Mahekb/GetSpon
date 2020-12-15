@@ -64,7 +64,7 @@ if(isset($_POST['amount'])) {
                 $amount =  (int)$_POST["amount"];
         }
 }
-
+    
    
     $FileType = strtolower(pathinfo($_FILES["fileUpload"]["name"],PATHINFO_EXTENSION));
     if (empty($_FILES["fileUpload"])) {
@@ -93,14 +93,17 @@ if($stnameErr == "" && $statusErr == "" && $fileErr == "" && $needErr == "" && $
         $email = $row['Email'];
         $stmt->close();
 
-
+        $target_dir="uploads/";
+        $target_file=$target_dir.basename($_FILES["fileUpload"]["name"]);
+        echo move_uploaded_file($_FILES["fileUpload"]["name"].$target_file);
+        $url=$target_file;
         $filess=file_get_contents($_FILES['fileUpload']['tmp_name']);
         if(isset($_POST['links'])){
                 $links=$_POST['links'];
         }    
         $query="INSERT INTO Startups (Username,Startup_Name,Reason,emp_Status,phone_no,email,Amount,links,Ifile) VALUES (?,?,?,?,?,?,?,?,?)";
         $stmt=mysqli_prepare($conn,$query);
-        mysqli_stmt_bind_param($stmt,"ssssssssb",$uname,$stname,$stneed,$status,$pno,$email,$amount,$links,$filess);
+        mysqli_stmt_bind_param($stmt,"sssssssss",$uname,$stname,$stneed,$status,$pno,$email,$amount,$links,$url);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
     }
