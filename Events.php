@@ -2,6 +2,16 @@
 session_start();
 ?>
 
+<?php
+  $islogin="hidden";
+  $islogout="visible";
+
+  if(isset($_SESSION['username']) && isset($_SESSION['login'])){
+    $islogin=$_SESSION['login'];
+    $islogout="hidden";
+  }
+?>
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -14,9 +24,26 @@ session_start();
 </head>
 <body>
 
+<ul>
+        <li><a class="left"><img src="Images/Mainlogo.jpg" width="100"> </a></li>
+        <li><a class="left" href="http://localhost/Getspon/Home_page.php">Home</a></li>
+        <li><a class="left" href="#About">About</a></li>
+        <li><a class="left" href="#Contact">Contact</a></li>
+        
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/profilepage.php">Profile</a></li>
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Logout.php">Log out</a></li>
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Chat.php">Chat</a></li>
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Startup.php">Add your Startup</a></li>
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Events.php">Add new Event</a></li>
+        <li style="visibility:<?php echo "$islogout"?>"><a class="right" href="http://localhost/Getspon/Signup.php">Sign up</a></li>
+        <li style="visibility:<?php echo "$islogout"?>"><a class="right" href="http://localhost/Getspon/Login.php">Log in</a></li>
+
+</ul> <br />
+
+
 <?php 
 
-$enameErr = $cityErr = $stateErr = $detErr = $amountErr = "";
+$enameErr = $cityErr = $eveErr = $stateErr = $detErr = $amountErr = "";
 
 
 if (isset($_POST['eventname']) && $_SERVER["REQUEST_METHOD"] == "POST") {
@@ -45,6 +72,16 @@ if(isset($_POST['details'])) {
         }
         else {
                 $details = $_POST["details"];
+        }
+}
+
+if(isset($_POST['eventdate'])) {
+
+        if (empty($_POST["eventdate"])) {
+                $eveErr = "Date of event needs to be specified.";
+        } 
+      else {
+                $edate = $_POST["eventdate"];
         }
 }
 
@@ -100,14 +137,14 @@ if($enameErr == "" && $cityErr == "" && $stateErr == "" && $detErr == "") {
         $email = $row['Email'];
         $stmt->close();
 
-        $query = "INSERT INTO Events VALUES (?,?,?,?,?,?,?,?)";
+        $query = "INSERT INTO Events(Username,Event_name,Details,Date1,city,state1,Phoneno,Email,Amount) VALUES (?,?,?,?,?,?,?,?,?)";
         $pst = mysqli_prepare($conn,$query);
-        mysqli_stmt_bind_param($pst,"ssssssss",$uname,$ename,$details,$city,$state,$pno,$email,$amount);
+        mysqli_stmt_bind_param($pst,"sssssssss",$uname,$ename,$details,$edate,$city,$state,$pno,$email,$amount);
 
         mysqli_stmt_execute($pst);	
         $getResult = mysqli_stmt_get_result($pst);	
         mysqli_stmt_close($pst);
-        $conn->close();
+        mysqli_close($conn);
 
         header("Location: http://localhost/Getspon/Home_page.php");
 
@@ -129,6 +166,11 @@ exit();
         Event short description:<br>
         <textarea type = "textarea"  name = "details" class="input-box" rows="3" cols = "30" ></textarea>
         <span class="error">* <?php echo $detErr;?></span>
+        <br><br>
+
+        Event Date:
+        <input type = "date"  name = "eventdate" class="input-box" >
+        <span class="error">* <?php echo $eveErr;?></span>
         <br><br>
 City:
 <select name="city" class="input-box" size=1 >
@@ -156,6 +198,9 @@ Enter amount:
 <input type = "text"  name = "amount" class="input-box">
 <span class="error">* <?php echo $amountErr;?></span>
 <br><br>
+
+Upload Event Logo:
+  <input type="file" name="fileToUpload" id="fileToUpload">
        
 <input class="reset-button" type="reset" value="Reset">
 <input class="submit-button" type="submit" value="Register">
