@@ -26,7 +26,7 @@ $conn = mysqli_connect("localhost","root","","Getspon");
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
-$stmt = $conn->prepare("SELECT Event_id,Event_name,Details,city,state1,Phoneno,Email,Amount,Date1 FROM events WHERE Event_id=?");
+$stmt = $conn->prepare("SELECT Event_id,Event_name,Details,city,state1,Phoneno,Email,Amount,Date1,Logo FROM events WHERE Event_id=?");
 $stmt->bind_param('s', $id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -34,7 +34,7 @@ $result = $stmt->get_result();
 
 echo '<div align="center">';
 while ($row = $result->fetch_assoc()) {
-  echo '<img src="Images/login.jpg"  width="70">' . '<br/>';
+  echo '<img src="' . $row['Logo'] . '"width="150">' . '<br/>';
   echo "<h1>" . $row['Event_name'] . "</h1  >";
   echo "<h3>Location: " . $row['city'] . "</h3>";
   echo "<h3>State: " . $row['state1'] . "</h3>";
