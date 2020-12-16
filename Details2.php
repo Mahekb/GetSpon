@@ -67,7 +67,7 @@ while ($row = $result->fetch_assoc()) {
   echo "<h3Phone no: " . $row['phone_no'] . "</h3>";
   echo "<h3>Email: " . $row['email'] . "</h3>";
   if ($row['links'] != "") {
-  echo "<h3>Links: " . $row['links'] . "</h3>";
+  echo "<h3>Links: <a href='" . $row['links'] . "'>" . $row['links'] . "</a></h3>";
   }
 
   echo "<a href='" . $row['Ifile'] . "'>";
