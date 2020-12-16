@@ -18,6 +18,7 @@ session_start();
 <head>
 <title>GetSpon</title>
 <style>
+
 .flex-container {
   display: flex;
   flex-wrap: wrap;
@@ -44,7 +45,7 @@ session_start();
   border: 3px solid #142850;
   border-radius: 15px;
   padding: 10px;
-  background-color: #bae2fd;
+  background-color: rgb(250, 186, 236);
 }
 
 
@@ -60,6 +61,7 @@ session_start();
 </style>
 <link rel="stylesheet" type="text/css" href="mystyle.css">
 </head>
+<body>
 
 <ul>
         <li><a class="left"><img src="Images/Mainlogo.jpg" width="100"> </a></li>
@@ -167,19 +169,19 @@ if(isset($_POST['opt'])) {
         }
 
         if ($opt=="--select--") {
-          $stmt = $conn->prepare("SELECT Event_id,Event_name,city,Amount,Date1 FROM events ORDER BY Event_id");
+          $stmt = $conn->prepare("SELECT Event_id,Event_name,city,Amount,Date1,Logo FROM events ORDER BY Event_id");
         }
         else if ($opt=="Date") {
-          $stmt = $conn->prepare("SELECT Event_id,Event_name,city,Amount,Date1 FROM events ORDER BY Date1");
+          $stmt = $conn->prepare("SELECT Event_id,Event_name,city,Amount,Date1,Logo FROM events ORDER BY Date1");
         }
         else if ($opt=="Eventname") {
-          $stmt = $conn->prepare("SELECT Event_id,Event_name,city,Amount,Date1 FROM events ORDER BY Event_name");
+          $stmt = $conn->prepare("SELECT Event_id,Event_name,city,Amount,Date1,Logo FROM events ORDER BY Event_name");
         }
         else if ($opt=="Amount") {
-          $stmt = $conn->prepare("SELECT Event_id,Event_name,city,Amount,Date1 FROM events ORDER BY Amount");
+          $stmt = $conn->prepare("SELECT Event_id,Event_name,city,Amount,Date1,Logo FROM events ORDER BY Amount");
         }
         else if ($opt=="City") {
-          $stmt = $conn->prepare("SELECT Event_id,Event_name,city,Amount,Date1 FROM events ORDER BY city");
+          $stmt = $conn->prepare("SELECT Event_id,Event_name,city,Amount,Date1,Logo FROM events ORDER BY city");
         }
 
         $stmt->execute();
@@ -187,9 +189,11 @@ if(isset($_POST['opt'])) {
 
         while ($row = $result->fetch_assoc()) {
           $eventid = $row['Event_id'];
-          echo '<div> <img src="Images/login.jpg"  width="70">' . '<br/>';
+
+          echo '<div> <img src="' . $row['Logo'] . '"width="150">' . '<br/>';
           echo "<h1>" . $row['Event_name'] . "</h1  >";
           echo "<h3>Location: " . $row['city'] . "</h3>";
+
           echo "<h3>Date: " . $row['Date1'] . "</h3>";
           echo "<h3>Amount: " . $row['Amount'] . "</h3>";
           echo '<form action="http://localhost/Getspon/Details.php?event_id='.$eventid.'" method="POST">';
@@ -252,7 +256,7 @@ if(isset($_POST['opt2'])) {
 
         while ($row = $result->fetch_assoc()) {
           $sid = $row['Startup_id'];
-          echo '<div> <img src="Images/login.jpg"  width="70">' . '<br/>';
+          echo '<div>';
           echo "<h1>" . $row['Startup_Name'] . "</h1  >";
           echo "<h3>Reason: " . $row['Reason'] . "</h3>";
           echo "<h3>Amount: " . $row['Amount'] . "</h3>";
