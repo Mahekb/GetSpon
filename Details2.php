@@ -19,6 +19,10 @@ body {
   background-color: rgb(138, 236, 243);
 
 }
+
+.doc {
+  font-size: 24px;
+}
     </style>
 </head>
 <body>
@@ -45,7 +49,7 @@ $stmt2 = $conn->prepare("SELECT Firstname,Lastname,City FROM user_details WHERE 
   $stmt2->close();
 
 
-$stmt = $conn->prepare("SELECT Startup_Name,Reason,emp_Status,phone_no,email,Amount,links FROM startups WHERE Startup_id=?");
+$stmt = $conn->prepare("SELECT Startup_Name,Reason,emp_Status,phone_no,email,Amount,links,Ifile FROM startups WHERE Startup_id=?");
 $stmt->bind_param('s', $id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -63,6 +67,12 @@ while ($row = $result->fetch_assoc()) {
   echo "<h3Phone no: " . $row['phone_no'] . "</h3>";
   echo "<h3>Email: " . $row['email'] . "</h3>";
   echo "<h3>Links: " . $row['links'] . "</h3>";
+  
+  echo "<a href='" . $row['Ifile'] . "'download>";
+  echo '<div class="doc">Click here to download Startup Details</div></a>';
+  echo "<br /><br/>";
+  
+  
 }
 
 $stmt->close();
