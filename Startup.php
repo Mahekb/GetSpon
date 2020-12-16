@@ -96,7 +96,7 @@ if(isset($_POST['amount'])) {
     
    
     $FileType = strtolower(pathinfo($_FILES["fileUpload"]["name"],PATHINFO_EXTENSION));
-    if (empty($_FILES["fileUpload"])) {
+    if (empty($_POST["fileUpload"])) {
             $fileErr = "File is required";
     } else if($FileType != 'png' && $FileType != 'docx' && $FileType != 'pdf'){
             $fileErr = "File should be of doc,docx or pdf format only";
