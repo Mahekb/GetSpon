@@ -43,7 +43,7 @@ session_start();
 
 <?php 
 
-$enameErr = $cityErr = $eveErr = $stateErr = $detErr = $amountErr = "";
+$enameErr = $cityErr = $eveErr = $stateErr = $detErr = $amountErr = $fileErr = "";
 
 
 if (isset($_POST['eventname']) && $_SERVER["REQUEST_METHOD"] == "POST") {
@@ -67,7 +67,7 @@ if(isset($_POST['details'])) {
         if (empty($_POST["details"])) {
                 $detErr = "Short detail is required";
         } 
-        else if (preg_match("/[^a-zA-Z0-9, .]/",$_POST["details"])) {
+        else if (preg_match("/[^a-zA-Z0-9, .-]/",$_POST["details"])) {
                 $detErr = "Special Characters are not allowed.";
         }
         else {
@@ -118,7 +118,14 @@ if(isset($_POST['amount'])) {
         }
 }
 
-if($enameErr == "" && $cityErr == "" && $stateErr == "" && $detErr == "") {
+    $FileType = strtolower(pathinfo($_FILES["fileUpload"]["name"],PATHINFO_EXTENSION));
+    if (empty($_FILES["fileUpload"])) {
+            $fileErr = "File is required";
+    } else if($FileType != 'png' && $FileType != 'jpg' && $FileType != 'jpeg'){
+            $fileErr = "File should be of jpg,jpeg or png format only";
+    }
+
+if($enameErr == "" && $cityErr == "" && $stateErr == "" && $detErr == "" && $fileErr == "") {
         
         $conn = mysqli_connect("localhost","root","","Getspon");
         
@@ -137,16 +144,30 @@ if($enameErr == "" && $cityErr == "" && $stateErr == "" && $detErr == "") {
         $email = $row['Email'];
         $stmt->close();
 
-        $query = "INSERT INTO Events(Username,Event_name,Details,Date1,city,state1,Phoneno,Email,Amount) VALUES (?,?,?,?,?,?,?,?,?)";
-        $pst = mysqli_prepare($conn,$query);
-        mysqli_stmt_bind_param($pst,"sssssssss",$uname,$ename,$details,$edate,$city,$state,$pno,$email,$amount);
 
-        mysqli_stmt_execute($pst);	
-        $getResult = mysqli_stmt_get_result($pst);	
-        mysqli_stmt_close($pst);
-        mysqli_close($conn);
+        $filedir="uploads/".$_FILES["fileUpload"]["name"];
 
-        header("Location: http://localhost/Getspon/Home_page.php");
+        if (move_uploaded_file($_FILES["fileUpload"]["tmp_name"],$filedir)) {
+                echo "The file ".$_FILES["fileUpload"]["name"]." has been uploaded.";
+                $url=$filedir;
+                $filess=file_get_contents($_FILES['fileUpload']['tmp_name']);
+                if(isset($_POST['links'])){
+                        $links=$_POST['links'];
+                }    
+                $query = "INSERT INTO Events(Username,Event_name,Details,Date1,city,state1,Phoneno,Email,Amount,Logo) VALUES (?,?,?,?,?,?,?,?,?,?)";
+                $pst = mysqli_prepare($conn,$query);
+                mysqli_stmt_bind_param($pst,"ssssssssss",$uname,$ename,$details,$edate,$city,$state,$pno,$email,$amount,$url);
+
+                mysqli_stmt_execute($pst);	
+                $getResult = mysqli_stmt_get_result($pst);	
+                mysqli_stmt_close($pst);
+                mysqli_close($conn);
+
+                header("Location: http://localhost/Getspon/Home_page.php");
+                }
+                else {
+                $fileErr="Sorry, there was an error uploading your file.";
+                }
 
 exit();
 }
@@ -157,7 +178,7 @@ exit();
        <div align="center" id="reg">
                   <h1>Event Details</h1><br>
        
-        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data">
         Event Name:
         <input type = "text"  name = "eventname" class="input-box">
         <span class="error">* <?php echo $enameErr;?></span>
@@ -200,8 +221,11 @@ Enter amount:
 <br><br>
 
 Upload Event Logo:
-  <input type="file" name="fileToUpload" id="fileToUpload">
-       
+<input type="file" name="fileUpload" id="fileUpload">
+  <span class="error">* <?php echo $fileErr;?></span>
+  <br><br>    
+
+
 <input class="reset-button" type="reset" value="Reset">
 <input class="submit-button" type="submit" value="Register">
 
