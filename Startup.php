@@ -103,7 +103,7 @@ if(isset($_POST['amount'])) {
     }
 
 
-if($stnameErr == "" && $statusErr == "" && $fileErr == "" && $needErr == "" && $amountErr == "" ) {
+iif($stnameErr == "" && $statusErr == "" && $fileErr == "" && $needErr == "" && $amountErr == "" ) {
     $conn=mysqli_connect("localhost","root","","Getspon");
     if(!$conn){
         die("Connection failed:".mysqli_connect_error());
@@ -121,24 +121,28 @@ if($stnameErr == "" && $statusErr == "" && $fileErr == "" && $needErr == "" && $
         $pno = $row['Phoneno'];
         $email = $row['Email'];
         $stmt->close();
+        
+        $filedir="uploads/".$_FILES["fileUpload"]["name"];
 
-        $target_dir="uploads/";
-        $target_file=$target_dir.basename($_FILES["fileUpload"]["name"]);
-        echo move_uploaded_file($_FILES["fileUpload"]["name"],$target_file);
-        $url=$target_file;
-        $filess=file_get_contents($_FILES['fileUpload']['tmp_name']);
-        if(isset($_POST['links'])){
-                $links=$_POST['links'];
-        }    
-        $query="INSERT INTO Startups (Username,Startup_Name,Reason,emp_Status,phone_no,email,Amount,links,Ifile) VALUES (?,?,?,?,?,?,?,?,?)";
-        $stmt=mysqli_prepare($conn,$query);
-        mysqli_stmt_bind_param($stmt,"sssssssss",$uname,$stname,$stneed,$status,$pno,$email,$amount,$links,$url);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
+        if (move_uploaded_file($_FILES["fileUpload"]["tmp_name"],$filedir)) {
+                echo "The file ".$_FILES["fileUpload"]["name"]." has been uploaded.";
+                $url=$filedir;
+                $filess=file_get_contents($_FILES['fileUpload']['tmp_name']);
+                if(isset($_POST['links'])){
+                        $links=$_POST['links'];
+                }    
+                $query="INSERT INTO Startups (Username,Startup_Name,Reason,emp_Status,phone_no,email,Amount,links,Ifile) VALUES (?,?,?,?,?,?,?,?,?)";
+                $stmt=mysqli_prepare($conn,$query);
+                mysqli_stmt_bind_param($stmt,"sssssssss",$uname,$stname,$stneed,$status,$pno,$email,$amount,$links,$url);
+                mysqli_stmt_execute($stmt);
+                mysqli_stmt_close($stmt);
+                header("Location: http://localhost/Getspon/Home_page.php");
+        } else {
+                $fileErr="Sorry, there was an error uploading your file.";
+        }
+
     }
-        header("Location: http://localhost/Getspon/Home_page.php");
-
-        exit();
+        
 }
 
 }
