@@ -66,6 +66,18 @@ if(isset($_POST['dateofbirth'])) {
                 $dobErr = "DOB is required";
         } 
       else {
+        
+                $dateob = new DateTime($_POST['dateofbirth']);
+                $today = new Datetime(date('y.m.d'));
+                $diff = $today->diff($dateob);
+                if($diff->y <18 ){
+                        $dobErr = "You are not eligible.";
+                    
+                }else{
+                    $dob=$_POST['dateofbirth'];
+                }
+            
+    
                 $dob = $_POST["dateofbirth"];
         }
 }
@@ -217,7 +229,7 @@ if($fnameErr == "" && $mnameErr == "" && $lnameErr == "" && $genderErr == "" && 
         $query = "INSERT INTO user_details VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
         $pst = mysqli_prepare($conn,$query);
-    
+
         $password1 = password_hash($password, PASSWORD_DEFAULT);
 
         mysqli_stmt_bind_param($pst,"sssssssssiss",$fname,$mname,$lname,$dob,$address,$city,$state,$gender,$username,$phoneno,$email,$password1);
@@ -230,7 +242,7 @@ if($fnameErr == "" && $mnameErr == "" && $lnameErr == "" && $genderErr == "" && 
 
         $conn->close();
     
-        header("Location: http://localhost/Getspon/Login.php?username=".$username."&password=".$password."");
+        header("Location: http://localhost:8080/Getspon/Login.php?username=".$username."&password=".$password."");
 
 exit;
 }
@@ -241,10 +253,10 @@ exit;
 
 <ul>
         <li><a class="left"><img src="Images/Mainlogo.jpg" width="100" </a></li>
-        <li><a class="left" href="http://localhost/Getspon/Home_page.php">Home</a></li>
+        <li><a class="left" href="http://localhost:8080/Getspon/Home_page.php">Home</a></li>
         <li><a class="left" href="#About">About</a></li>
         <li><a class="left" href="#Contact">Contact</a></li>
-        <li><a class="right" href="http://localhost/Getspon/Login.php">Log in</a></li>
+        <li><a class="right" href="http://localhost:8080/Getspon/Login.php">Log in</a></li>
 
 </ul><br><br>
        <div align="center" id="reg">

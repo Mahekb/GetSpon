@@ -11,8 +11,8 @@ session_start();
 
 session_unset();
 session_destroy();
-$_COOKIE['firstname']="";
-header("Location: http://localhost/Getspon/Login.php");
+
+header("Location: http://localhost:8080/Getspon/Signup.php");
 exit();
 
 

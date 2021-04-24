@@ -26,7 +26,7 @@ else {
     
 <ul>
         <li><a class="left"><img src="Images/Mainlogo.jpg" width="100" </a></li>
-        <li><a class="right" href="http://localhost/Getspon/Signup.php">Sign up</a></li>
+        <li><a class="right" href="http://localhost:8080/Getspon/Signup.php">Sign up</a></li>
 
 </ul><br><br>
 
@@ -37,7 +37,7 @@ else {
     <form method=post >
         <input type = "text"  name = "uname" placeholder="Enter Username" class="input-box" required value= <?php echo $userna?>><br><br>
         <input type="password" name="passwordid" placeholder="Enter password" class="input-box" required><br><br>
-    <Text class="right"><a href="http://localhost/Getspon/Signup.php">Forgot Password?</a></Text><br><br>
+    <Text class="right"><a href="http://localhost:8080/Getspon/Signup.php">Forgot Password?</a></Text><br><br>
        
     <span class="error">* <?php echo $nameErr;?></span><br>
 
@@ -46,7 +46,7 @@ else {
 
 </form>
    
-<Text>Don't have an account? <a href="http://localhost/Getspon/Signup.php">Sign Up</a></Text><br><br>
+<Text>Don't have an account? <a href="http://localhost:8080/Getspon/Signup.php">Sign Up</a></Text><br><br>
 <?php
 
             if(isset($_POST["uname"]) && isset($_POST["passwordid"])){
@@ -65,10 +65,10 @@ else {
                             $username = $_POST["uname"];
                             $_SESSION["login"] = "visible" ;
                             $_SESSION["username"] = $username ;
-                            header("Location: http://localhost/Getspon/Home_page.php");
+                            header("Location: http://localhost:8080/Getspon/Home_page.php");
                         }
                     }
-                    echo '<span class="error">The username or password are incorrect!'.$pss1.'<span><br><br>';
+                    echo '<span class="error">The username or password are incorrect!<span><br><br>';
                     
                     $stmt->close();
             }

@@ -40,7 +40,7 @@ while ($row = $result->fetch_assoc()) {
   echo "<h3>State: " . $row['state1'] . "</h3>";
   echo "<h3>Date: " . $row['Date1'] . "</h3>";
   echo "<h3>Amount: " . $row['Amount'] . "</h3>";
-  echo "<h3Phone no: " . $row['Phoneno'] . "</h3>";
+  echo "<h3>Phone no: " . $row['Phoneno'] . "</h3>";
   echo "<h3>Email: " . $row['Email'] . "</h3>";
 }
 
@@ -55,11 +55,11 @@ echo '</div>';
 
 <script>
 function myFunction() {
-  location.replace("http://localhost/Getspon/Home_page.php")
+  location.replace("http://localhost:8080/Getspon/Home_page.php")
 } 
 
 function myFunction2() {
-  location.replace("http://localhost/Getspon/Chat.php")
+  location.replace("http://localhost:8080/Getspon/Chat.php")
 } 
 </script>
 

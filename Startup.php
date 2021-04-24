@@ -25,17 +25,17 @@ session_start();
 
     <ul>
         <li><a class="left"><img src="Images/Mainlogo.jpg" width="100"> </a></li>
-        <li><a class="left" href="http://localhost/Getspon/Home_page.php">Home</a></li>
+        <li><a class="left" href="http://localhost:8080/Getspon/Home_page.php">Home</a></li>
         <li><a class="left" href="#About">About</a></li>
         <li><a class="left" href="#Contact">Contact</a></li>
         
-        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/profilepage.php">Profile</a></li>
-        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Logout.php">Log out</a></li>
-        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Chat.php">Chat</a></li>
-        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Startup.php">Add your Startup</a></li>
-        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Events.php">Add new Event</a></li>
-        <li style="visibility:<?php echo "$islogout"?>"><a class="right" href="http://localhost/Getspon/Signup.php">Sign up</a></li>
-        <li style="visibility:<?php echo "$islogout"?>"><a class="right" href="http://localhost/Getspon/Login.php">Log in</a></li>
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhos:8080/Getspon/profilepage.php">Profile</a></li>
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost:8080/Getspon/Logout.php">Log out</a></li>
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost:8080/Getspon/Chat.php">Chat</a></li>
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost:8080/Getspon/Startup.php">Add your Startup</a></li>
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost:8080/Getspon/Events.php">Add new Event</a></li>
+        <li style="visibility:<?php echo "$islogout"?>"><a class="right" href="http://localhost:8080/Getspon/Signup.php">Sign up</a></li>
+        <li style="visibility:<?php echo "$islogout"?>"><a class="right" href="http://localhost:8080/Getspon/Login.php">Log in</a></li>
 
 </ul> <br />
 
@@ -98,12 +98,12 @@ if(isset($_POST['amount'])) {
     $FileType = strtolower(pathinfo($_FILES["fileUpload"]["name"],PATHINFO_EXTENSION));
     if (empty($_FILES["fileUpload"])) {
             $fileErr = "File is required";
-    } else if($FileType != 'png' && $FileType != 'docx' && $FileType != 'pdf'){
+    } else if($FileType != 'doc' && $FileType != 'docx' && $FileType != 'pdf'){
             $fileErr = "File should be of doc,docx or pdf format only";
     }
 
 
-iif($stnameErr == "" && $statusErr == "" && $fileErr == "" && $needErr == "" && $amountErr == "" ) {
+if($stnameErr == "" && $statusErr == "" && $fileErr == "" && $needErr == "" && $amountErr == "" ) {
     $conn=mysqli_connect("localhost","root","","Getspon");
     if(!$conn){
         die("Connection failed:".mysqli_connect_error());
@@ -131,12 +131,12 @@ iif($stnameErr == "" && $statusErr == "" && $fileErr == "" && $needErr == "" && 
                 if(isset($_POST['links'])){
                         $links=$_POST['links'];
                 }    
-                $query="INSERT INTO Startups (Username,Startup_Name,Reason,emp_Status,phone_no,email,Amount,links,Ifile) VALUES (?,?,?,?,?,?,?,?,?)";
+                $query="INSERT INTO Startups (Username,Startup_Name,Description1,emp_Status,phone_no,email,Amount,links,Ifile) VALUES (?,?,?,?,?,?,?,?,?)";
                 $stmt=mysqli_prepare($conn,$query);
                 mysqli_stmt_bind_param($stmt,"sssssssss",$uname,$stname,$stneed,$status,$pno,$email,$amount,$links,$url);
                 mysqli_stmt_execute($stmt);
                 mysqli_stmt_close($stmt);
-                header("Location: http://localhost/Getspon/Home_page.php");
+                header("Location: http://localhost:8080/Getspon/Home_page.php");
         } else {
                 $fileErr="Sorry, there was an error uploading your file.";
         }
@@ -155,7 +155,7 @@ iif($stnameErr == "" && $statusErr == "" && $fileErr == "" && $needErr == "" && 
                 <input type = "text"  name = "stupname" class="input-box">
                 <span class="error">* <?php echo $stnameErr;?></span>
                 <br><br>
-                Reason of Bringing Up this Idea:<br>
+                Short Description:<br>
                 <textarea type = "textarea"  name = "stupneed" class="input-box" rows="3" cols = "30" ></textarea>
                 <span class="error">* <?php echo $needErr;?></span>
                 <br><br>
