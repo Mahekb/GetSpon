@@ -242,7 +242,7 @@ if($fnameErr == "" && $mnameErr == "" && $lnameErr == "" && $genderErr == "" && 
 
         $conn->close();
     
-        header("Location: http://localhost:8080/Getspon/Login.php?username=".$username."&password=".$password."");
+        header("Location: http://localhost/Getspon/Login.php?username=".$username."&password=".$password."");
 
 exit;
 }
@@ -253,10 +253,10 @@ exit;
 
 <ul>
         <li><a class="left"><img src="Images/Mainlogo.jpg" width="100" </a></li>
-        <li><a class="left" href="http://localhost:8080/Getspon/Home_page.php">Home</a></li>
+        <li><a class="left" href="http://localhost/Getspon/Home_page.php">Home</a></li>
         <li><a class="left" href="#About">About</a></li>
         <li><a class="left" href="#Contact">Contact</a></li>
-        <li><a class="right" href="http://localhost:8080/Getspon/Login.php">Log in</a></li>
+        <li><a class="right" href="http://localhost/Getspon/Login.php">Log in</a></li>
 
 </ul><br><br>
        <div align="center" id="reg">
@@ -264,7 +264,7 @@ exit;
        
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         First Name:
-        <input type = "text"  name = "firstname" class="input-box">
+        <input type = "text"  name = "firstname" id = "firstname" class="input-box">
         <span class="error">* <?php echo $fnameErr;?></span>
         <br><br>
         Middle Name:

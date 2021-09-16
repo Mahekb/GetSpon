@@ -66,24 +66,24 @@ session_start();
 
     <ul>
         <li><a class="left"><img src="Images/Mainlogo.jpg" width="100"> </a></li>
-        <li><a class="left" href="http://localhost:8080/Getspon/Home_page.php">Home</a></li>
+        <li><a class="left" href="http://localhost/Getspon/Home_page.php">Home</a></li>
         <li><a class="left" href="#About">About</a></li>
         <li><a class="left" href="#Contact">Contact</a></li>
 
         <li style="visibility:<?php echo "$islogin"?>"><a class="right"
-                href="http://localhost:8080/Getspon/profilepage.php">Profile</a></li>
+                href="http://localhost/Getspon/profilepage.php">Profile</a></li>
         <li style="visibility:<?php echo "$islogin"?>"><a class="right"
-                href="http://localhost:8080/Getspon/Logout.php">Log out</a></li>
+                href="http://localhost/Getspon/Logout.php">Log out</a></li>
         <li style="visibility:<?php echo "$islogin"?>"><a class="right"
-                href="http://localhost:8080/Getspon/Chat.php">Chat</a></li>
+                href="http://localhost/Getspon/Chat.php">Chat</a></li>
         <li style="visibility:<?php echo "$islogin"?>"><a class="right"
-                href="http://localhost:8080/Getspon/Startup.php">Add your Startup</a></li>
+                href="http://localhost/Getspon/Startup.php">Add your Startup</a></li>
         <li style="visibility:<?php echo "$islogin"?>"><a class="right"
-                href="http://localhost:8080/Getspon/Events.php">Add new Event</a></li>
+                href="http://localhost/Getspon/Events.php">Add new Event</a></li>
         <li style="visibility:<?php echo "$islogout"?>"><a class="right"
-                href="http://localhost:8080/Getspon/Signup.php">Sign up</a></li>
+                href="http://localhost/Getspon/Signup.php">Sign up</a></li>
         <li style="visibility:<?php echo "$islogout"?>"><a class="right"
-                href="http://localhost:8080/Getspon/Login.php">Log in</a></li>
+                href="http://localhost/Getspon/Login.php">Log in</a></li>
 
     </ul>
     <!-- <div> -->
@@ -207,7 +207,7 @@ session_start();
 
           echo "<h3>Date: " . $row['Date1'] . "</h3>";
           echo "<h3>Amount: " . $row['Amount'] . "</h3>";
-          echo '<form action="http://localhost:8080/Getspon/Details.php?event_id='.$eventid.'" method="POST">';
+          echo '<form action="http://localhost/Getspon/Details.php?event_id='.$eventid.'" method="POST">';
           echo '<button type="submit" name="submit" class="details">View More</button></form>';
           echo '</div>';
         }
@@ -272,7 +272,7 @@ session_start();
           echo "<h1>" . $row['Startup_Name'] . "</h1  >";
           echo "<h3>Field: " . $row['Description1'] . "</h3>";
           echo "<h3>Amount: " . $row['Amount'] . "</h3>";
-          echo '<form action="http://localhost:8080/Getspon/Details2.php?s_id='.$sid.'" method="POST">';
+          echo '<form action="http://localhost/Getspon/Details2.php?s_id='.$sid.'" method="POST">';
           echo '<button type="submit" name="submit" class="details">View More</button></form>';
           echo '</div>';
         }

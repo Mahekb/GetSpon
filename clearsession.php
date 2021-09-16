@@ -12,7 +12,7 @@ session_start();
 session_unset();
 session_destroy();
 
-header("Location: http://localhost:8080/Getspon/Signup.php");
+header("Location: http://localhost/Getspon/Signup.php");
 exit();
 
 

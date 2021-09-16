@@ -55,11 +55,11 @@ echo '</div>';
 
 <script>
 function myFunction() {
-  location.replace("http://localhost:8080/Getspon/Home_page.php")
+  location.replace("http://localhost/Getspon/Home_page.php")
 } 
 
 function myFunction2() {
-  location.replace("http://localhost:8080/Getspon/Chat.php")
+  location.replace("http://localhost/Getspon/Chat.php")
 } 
 </script>
 

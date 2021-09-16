@@ -25,17 +25,17 @@ session_start();
 
     <ul>
         <li><a class="left"><img src="Images/Mainlogo.jpg" width="100"> </a></li>
-        <li><a class="left" href="http://localhost:8080/Getspon/Home_page.php">Home</a></li>
+        <li><a class="left" href="http://localhost/Getspon/Home_page.php">Home</a></li>
         <li><a class="left" href="#About">About</a></li>
         <li><a class="left" href="#Contact">Contact</a></li>
         
         <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhos:8080/Getspon/profilepage.php">Profile</a></li>
-        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost:8080/Getspon/Logout.php">Log out</a></li>
-        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost:8080/Getspon/Chat.php">Chat</a></li>
-        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost:8080/Getspon/Startup.php">Add your Startup</a></li>
-        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost:8080/Getspon/Events.php">Add new Event</a></li>
-        <li style="visibility:<?php echo "$islogout"?>"><a class="right" href="http://localhost:8080/Getspon/Signup.php">Sign up</a></li>
-        <li style="visibility:<?php echo "$islogout"?>"><a class="right" href="http://localhost:8080/Getspon/Login.php">Log in</a></li>
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Logout.php">Log out</a></li>
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Chat.php">Chat</a></li>
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Startup.php">Add your Startup</a></li>
+        <li style="visibility:<?php echo "$islogin"?>"><a class="right" href="http://localhost/Getspon/Events.php">Add new Event</a></li>
+        <li style="visibility:<?php echo "$islogout"?>"><a class="right" href="http://localhost/Getspon/Signup.php">Sign up</a></li>
+        <li style="visibility:<?php echo "$islogout"?>"><a class="right" href="http://localhost/Getspon/Login.php">Log in</a></li>
 
 </ul> <br />
 
@@ -136,7 +136,7 @@ if($stnameErr == "" && $statusErr == "" && $fileErr == "" && $needErr == "" && $
                 mysqli_stmt_bind_param($stmt,"sssssssss",$uname,$stname,$stneed,$status,$pno,$email,$amount,$links,$url);
                 mysqli_stmt_execute($stmt);
                 mysqli_stmt_close($stmt);
-                header("Location: http://localhost:8080/Getspon/Home_page.php");
+                header("Location: http://localhost/Getspon/Home_page.php");
         } else {
                 $fileErr="Sorry, there was an error uploading your file.";
         }
