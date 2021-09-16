@@ -77,6 +77,22 @@
                                 $userErr = "Username is required";
                         } else if (!preg_match("/^[a-zA-Z0-9]*$/", $_POST["username"])) {
                                 $userErr = "Only letters and numbers are allowed.";
+                        } else {
+
+                                $conn = mysqli_connect("localhost", "root", "", "Getspon");
+                                if (!$conn) {
+                                        die("Connection failed:" . mysqli_connect_error());
+                                }
+                                $stmt = $conn->prepare("SELECT Username FROM user_details WHERE Username=?");
+                                $stmt->bind_param('s', $username);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                if (mysqli_num_rows($result) > 0) {
+                                        $userErr = "Username is already taken.";
+                                }
+
+
+                                mysqli_close($conn);
                         }
                 }
 
@@ -86,6 +102,22 @@
                                 $phoneErr = "Phone number is required";
                         } else if (!preg_match("/\d{10}/", $_POST["phoneno"])) {
                                 $phoneErr = "Invalid Phone number.";
+                        } else {
+
+                                $conn = mysqli_connect("localhost", "root", "", "Getspon");
+                                if (!$conn) {
+                                        die("Connection failed:" . mysqli_connect_error());
+                                }
+                                $stmt = $conn->prepare("SELECT Username FROM user_details WHERE Phoneno=?");
+                                $stmt->bind_param('i', $phoneno);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                if (mysqli_num_rows($result) > 0) {
+                                        $phoneErr = "Phone number is already in use.";
+                                }
+
+
+                                mysqli_close($conn);
                         }
                 }
 
@@ -96,6 +128,20 @@
                                 $emailErr = "Email is required";
                         } else if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
                                 $emailErr = "Invalid email format";
+                        } else {
+
+                                $conn = mysqli_connect("localhost", "root", "", "Getspon");
+                                if (!$conn) {
+                                        die("Connection failed:" . mysqli_connect_error());
+                                }
+                                $stmt = $conn->prepare("SELECT Username FROM user_details WHERE Email=?");
+                                $stmt->bind_param('s', $email);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                if (mysqli_num_rows($result) > 0) {
+                                        $emailErr = "Email address is already in use.";
+                                }
+                                mysqli_close($conn);
                         }
                 }
 

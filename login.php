@@ -71,6 +71,7 @@ else {
                     echo '<span class="error">The username or password are incorrect!<span><br><br>';
                     
                     $stmt->close();
+                    $conn->close();
             }
 ?>
 
