@@ -206,8 +206,7 @@
 
                         $conn->close();
 
-                        header("Location: http://localhost/Getspon/Login.php?username=" . $username . "&password=" . $password . "");
-
+                        header("Location: Login.php");
                         exit;
                 }
         }
@@ -217,10 +216,10 @@
 
         <ul>
                 <li><a class="left"><img src="Images/Mainlogo.jpg" width="100" </a></li>
-                <li><a class="left" href="http://localhost/Getspon/Home_page.php">Home</a></li>
+                <li><a class="left" href="Home_page.php">Home</a></li>
                 <li><a class="left" href="#About">About</a></li>
                 <li><a class="left" href="#Contact">Contact</a></li>
-                <li><a class="right" href="http://localhost/Getspon/Login.php">Log in</a></li>
+                <li><a class="right" href="Login.php">Log in</a></li>
 
         </ul><br><br>
         <div align="center" id="reg">
