@@ -206,8 +206,7 @@
 
                         $conn->close();
 
-                        header("Location: http://localhost/Getspon/Login.php?username=" . $username . "&password=" . $password . "");
-
+                        header("Location: Login.php");
                         exit;
                 }
         }
