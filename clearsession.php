@@ -1,22 +1,25 @@
-<?php 
+<?php
 session_start();
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head></head>
+
 <body>
 
-<?php 
+    <?php
 
-session_unset();
-session_destroy();
+    session_unset();
+    session_destroy();
 
-header("Location: http://localhost/Getspon/Signup.php");
-exit();
+    header("Location: Signup.php");
+    exit();
 
 
-?>
-    
+    ?>
+
 </body>
+
 </html>

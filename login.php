@@ -11,8 +11,6 @@
 
 
     <?php
-    $username = $password = "hi";
-    $c = 0;
     $invalidErr = "";
     ?>
 
@@ -32,47 +30,29 @@
 
         $num = mysqli_num_rows($result);
         if ($num == 1) {
-            $c = 1;
             while ($row = mysqli_fetch_assoc($result)) {
-                echo '<h1>' . $row['Username'] . '</h1>';
-                echo '<h1>' . $row['Password1'] . '</h1>';
-
-                $passwordhash = password_hash($password, PASSWORD_DEFAULT);
-                $passwordhash1 = password_hash($password, PASSWORD_DEFAULT);
-                echo '<h1>' . $passwordhash . '</h1>';
-                echo '<h1>' . $passwordhash1 . '</h1>';
-
-                // if $passwordhash == $row
-
-
                 if (password_verify($password, $row['Password1'])) {
-                    $c = 33;
-                    $login = true;
                     session_start();
-                    $_SESSION['loggedin'] = true;
-                    $_SESSION['username'] = $username;
+                    // $login = true;
+                    // $_SESSION['loggedin'] = true;
+                    // $_SESSION['username'] = $username;
+                    $_SESSION["login"] = "visible";
+                    $_SESSION["username"] = $username;
                     header("location: Home_page.php");
                 } else {
                     $invalidErr = "Invalid Credentials";
                 }
             }
         } else {
-            $c = 2;
             $invalidErr = "Invalid Credentials";
         }
-
-
-       
     }
     ?>
 
 
     <ul>
         <li><a class="left"><img src="Images/Mainlogo.jpg" width="100" </a></li>
-        <li><a class="right" href="http://localhost/Getspon/Signup.php">Sign up</a></li>
-        <li><a class="right"> <?php
-                                echo $username . $password . $c;
-                                ?></a></li>
+        <li><a class="right" href="Signup.php">Sign up</a></li>
     </ul><br><br>
 
 
@@ -84,16 +64,16 @@
 
             <input type="text" name="loginuser" placeholder="Enter Username" class="input-box" required><br><br>
             <input type="password" name="loginpassword" placeholder="Enter password" class="input-box" required><br><br>
-            <Text class="right"><a href="http://localhost/Getspon/Signup.php">Forgot Password?</a></Text><br><br>
+            <Text class="right"><a href="Signup.php">Forgot Password?</a></Text><br><br>
 
             <span class="error">* <?php echo $invalidErr; ?></span><br>
 
-            <button class="button" type="submit">Login</button><br><br>
+            <input class="button" type="submit" value="Login">
             <!-- <input type="checkbox" name="remember"> Remember me<br><br> -->
 
         </form>
 
-        <Text>Don't have an account? <a href="http://localhost/Getspon/Signup.php">Sign Up</a></Text><br><br>
+        <Text>Don't have an account? <a href="Signup.php">Sign Up</a></Text><br><br>
 
 
 
