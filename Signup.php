@@ -1,3 +1,7 @@
+<?php 
+include 'partials/_isloggedin.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,10 +19,8 @@
 
         <?php
 
-        $uname = $dob = $gender = $username = $phoneno = $email = $password = $cpassword = "";
-        $checkbox = "";
+        $uname = $dob = $checkbox = $gender = $username = $phoneno = $email = $password = $cpassword = "";
         $city = $state = '--select--';
-
         $unameErr = $genderErr = $cityErr = $stateErr = $dobErr = "";
         $userErr = $phoneErr = $emailErr = $passErr = $conpassErr = $cpassErr = $checkboxErr = "";
 
@@ -79,10 +81,7 @@
                                 $userErr = "Only letters and numbers are allowed.";
                         } else {
 
-                                $conn = mysqli_connect("localhost", "root", "", "Getspon");
-                                if (!$conn) {
-                                        die("Connection failed:" . mysqli_connect_error());
-                                }
+                                include 'partials/_dbconnect.php';
                                 $stmt = $conn->prepare("SELECT Username FROM user_details WHERE Username=?");
                                 $stmt->bind_param('s', $username);
                                 $stmt->execute();
@@ -104,10 +103,7 @@
                                 $phoneErr = "Invalid Phone number.";
                         } else {
 
-                                $conn = mysqli_connect("localhost", "root", "", "Getspon");
-                                if (!$conn) {
-                                        die("Connection failed:" . mysqli_connect_error());
-                                }
+                                include 'partials/_dbconnect.php';
                                 $stmt = $conn->prepare("SELECT Username FROM user_details WHERE Phoneno=?");
                                 $stmt->bind_param('i', $phoneno);
                                 $stmt->execute();
@@ -130,10 +126,7 @@
                                 $emailErr = "Invalid email format";
                         } else {
 
-                                $conn = mysqli_connect("localhost", "root", "", "Getspon");
-                                if (!$conn) {
-                                        die("Connection failed:" . mysqli_connect_error());
-                                }
+                                include 'partials/_dbconnect.php';
                                 $stmt = $conn->prepare("SELECT Username FROM user_details WHERE Email=?");
                                 $stmt->bind_param('s', $email);
                                 $stmt->execute();
@@ -184,26 +177,19 @@
 
                 if ($unameErr == "" && $genderErr == "" && $cityErr == "" && $stateErr == "" && $dobErr == "" && $userErr == "" && $phoneErr == "" && $emailErr == "" && $passErr == "" && $conpassErr == "" && $checkboxErr == "" && $cpassErr == "") {
 
-                        $conn = mysqli_connect("localhost", "root", "", "Getspon");
-
-                        if (!$conn) {
-                                die("Connection failed: " . mysqli_connect_error());
-                        }
+                        include 'partials/_dbconnect.php';
 
                         $query = "INSERT INTO user_details VALUES (?,?,?,?,?,?,?,?,?)";
 
                         $pst = mysqli_prepare($conn, $query);
-
                         $password1 = password_hash($password, PASSWORD_DEFAULT);
 
                         mysqli_stmt_bind_param($pst, "ssssssiss", $uname, $dob, $city, $state, $gender, $username, $phoneno, $email, $password1);
-
                         mysqli_stmt_execute($pst);
 
                         $getResult = mysqli_stmt_get_result($pst);
 
                         mysqli_stmt_close($pst);
-
                         $conn->close();
 
                         header("Location: Login.php");

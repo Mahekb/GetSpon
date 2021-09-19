@@ -1,5 +1,5 @@
 <?php
-session_start();
+include 'partials/_isloggedin.php';
 ?>
 
 <?php
@@ -21,15 +21,14 @@ if (!$conn) {
 }
 $uname = $_SESSION['username'];
 
-$stmt2 = $conn->prepare("SELECT Firstname,Lastname FROM user_details WHERE Username=?");
-$stmt2->bind_param('s', $uname);
-$stmt2->execute();
-$result2 = $stmt2->get_result();
-while ($row = $result2->fetch_assoc()) {
-    $fn = $row['Firstname'];
-    $ln = $row['Lastname'];
+$stmt = $conn->prepare("SELECT Fullname FROM user_details WHERE Username=?");
+$stmt->bind_param('s', $uname);
+$stmt->execute();
+$result = $stmt->get_result();
+while ($row = $result->fetch_assoc()) {
+    $fullname = $row['Fullname'];
 }
-$stmt2->close();
+$stmt->close();
 $conn->close();
 ?>
 
@@ -69,7 +68,7 @@ $conn->close();
     <div align="center" id="log">
         <h1>Logout</h1>
         <img src="Images/login.jpg" height="150" width="150"></br>
-        <h1 class="uppercase"><?php echo $fn . " " . $ln ?></h1></br></br>
+        <h1 class="uppercase"><?php echo $fullname ?></h1></br></br>
         <form method="post" action="clearsession.php">
             <button class="button" type="submit" name="logout">Logout</button><br><br>
         </form>

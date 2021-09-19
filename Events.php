@@ -1,5 +1,5 @@
-<?php
-session_start();
+<?php 
+include 'partials/_isloggedin.php';
 ?>
 
 <?php
@@ -122,11 +122,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['login'])) {
 
                 if ($enameErr == "" && $cityErr == "" && $stateErr == "" && $detErr == "" && $fileErr == "") {
 
-                        $conn = mysqli_connect("localhost", "root", "", "Getspon");
-
-                        if (!$conn) {
-                                die("Connection failed: " . mysqli_connect_error());
-                        }
+                        include 'partials/_dbconnect.php';
                         $uname = $_SESSION['username'];
 
                         $stmt = $conn->prepare("SELECT Phoneno, Email FROM user_details WHERE Username=?");

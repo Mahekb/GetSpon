@@ -1,3 +1,7 @@
+<?php 
+include 'partials/_isloggedin.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,10 +28,7 @@
   <?php
 
   $id = $_GET['event_id'];
-  $conn = mysqli_connect("localhost", "root", "", "Getspon");
-  if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-  }
+  include 'partials/_dbconnect.php';
   $stmt = $conn->prepare("SELECT Event_id,Event_name,Details,city,state1,Phoneno,Email,Amount,Date1,Logo FROM events WHERE Event_id=?");
   $stmt->bind_param('s', $id);
   $stmt->execute();

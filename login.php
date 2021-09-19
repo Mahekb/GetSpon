@@ -1,3 +1,7 @@
+<?php
+include 'partials/_isloggedin.php';
+?>
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -9,7 +13,6 @@
 
 <body>
 
-
     <?php
     $invalidErr = "";
     ?>
@@ -19,16 +22,14 @@
     if (isset($_POST["loginuser"]) && $_SERVER["REQUEST_METHOD"] == "POST") {
         $username = $_POST['loginuser'];
         $password = $_POST['loginpassword'];
-        $conn = mysqli_connect("localhost", "root", "", "Getspon");
-        if (!$conn) {
-            die("Connection failed:" . mysqli_connect_error());
-        }
+        include 'partials/_dbconnect.php';
         $stmt = $conn->prepare("SELECT Username, Password1 FROM user_details WHERE Username=?");
         $stmt->bind_param('s', $username);
         $stmt->execute();
         $result = $stmt->get_result();
 
         $num = mysqli_num_rows($result);
+        echo $num;
         if ($num == 1) {
             while ($row = mysqli_fetch_assoc($result)) {
                 if (password_verify($password, $row['Password1'])) {

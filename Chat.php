@@ -1,5 +1,5 @@
 <?php
-session_start();
+include 'partials/_isloggedin.php';
 ?>
 
 <?php

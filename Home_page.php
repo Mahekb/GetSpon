@@ -1,5 +1,5 @@
-<?php
-session_start();
+<?php 
+include 'partials/_isloggedin.php';
 ?>
 
 <?php
@@ -188,10 +188,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['login'])) {
         <div class="flex-container">
 
             <?php
-            $conn = mysqli_connect("localhost", "root", "", "Getspon");
-            if (!$conn) {
-                die("Connection failed: " . mysqli_connect_error());
-            }
+            include 'partials/_dbconnect.php';
 
             if ($opt == "--select--") {
                 $stmt = $conn->prepare("SELECT Event_id,Event_name,city,Amount,Date1,Logo FROM events ORDER BY Event_id");
@@ -259,10 +256,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['login'])) {
         <div class="flex-container">
             <?php
 
-            $conn = mysqli_connect("localhost", "root", "", "Getspon");
-            if (!$conn) {
-                die("Connection failed: " . mysqli_connect_error());
-            }
+            include 'partials/_dbconnect.php';
 
             if ($opt2 == "--select--") {
                 $stmt = $conn->prepare("SELECT Startup_id,Startup_Name,Description1,Amount,links FROM startups ORDER BY Startup_id");

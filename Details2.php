@@ -1,3 +1,7 @@
+<?php 
+include 'partials/_isloggedin.php';
+?>
+
 <?php
 session_start();
 ?>
@@ -32,23 +36,8 @@ session_start();
   <?php
 
   $id = $_GET['s_id'];
-  $conn = mysqli_connect("localhost", "root", "", "Getspon");
-  if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-  }
+  include 'partials/_dbconnect.php';
 
-  // $uname=$_SESSION['username'];
-
-  // $stmt2 = $conn->prepare("SELECT Firstname,Lastname,City FROM user_details WHERE Username=?");
-  //   $stmt2->bind_param('s', $uname);
-  //   $stmt2->execute();
-  //   $result2 = $stmt2->get_result();
-  //   while ($row = $result2->fetch_assoc()) { 
-  //     $fn = $row['Firstname'];
-  //     $ln = $row['Lastname'];
-  //     $city = $row['City'];
-  //   }
-  //   $stmt2->close();
 
   $stmt1 = $conn->prepare("SELECT Username FROM startups WHERE Startup_id=?");
   $stmt1->bind_param('s', $id);

@@ -1,5 +1,8 @@
+<?php 
+include 'partials/_isloggedin.php';
+?>
+
 <?php
-session_start();
 
 $islogin = "hidden";
 $islogout = "visible";
@@ -9,10 +12,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['login'])) {
     $islogout = "hidden";
 }
 
-$conn = mysqli_connect("localhost", "root", "", "Getspon");
-if (!$conn) {
-    die("Connection failed:" . mysqli_connect_error());
-}
+include 'partials/_dbconnect.php';
 $username = $_SESSION['username'];
 ?>
 <?php

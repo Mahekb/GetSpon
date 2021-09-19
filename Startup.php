@@ -1,5 +1,5 @@
-<?php
-session_start();
+<?php 
+include 'partials/_isloggedin.php';
 ?>
 
 <?php
@@ -103,10 +103,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['login'])) {
 
 
                 if ($stnameErr == "" && $statusErr == "" && $fileErr == "" && $needErr == "" && $amountErr == "") {
-                        $conn = mysqli_connect("localhost", "root", "", "Getspon");
-                        if (!$conn) {
-                                die("Connection failed:" . mysqli_connect_error());
-                        }
+                        include 'partials/_dbconnect.php';
                         if (isset($_POST['submit'])) {
                                 $links = "-";
                                 $uname = $_SESSION['username'];
